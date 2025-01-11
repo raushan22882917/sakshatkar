@@ -25,6 +25,7 @@ import DevOpsPractice from "./pages/DevOpsPractice";
 import HRInterview from "./pages/HRInterview";
 import HRInterviewSession from "./pages/HRInterviewSession";
 import Admin from "./pages/Admin";
+import Hackathons from "./pages/Hackathons";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,6 +52,7 @@ const App = () => {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
+                    <Route path="/hackathons" element={<Hackathons />} />
                     <Route 
                       path="/self-practice" 
                       element={
