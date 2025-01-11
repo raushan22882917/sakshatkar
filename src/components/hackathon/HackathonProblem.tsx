@@ -38,13 +38,28 @@ export function HackathonProblem({ problem, hackathonId }: HackathonProblemProps
         return;
       }
 
+      // Create a session for this hackathon attempt
+      const { data: sessionData, error: sessionError } = await supabase
+        .from("interview_sessions")
+        .insert([
+          { user_id: user.id }
+        ])
+        .select()
+        .single();
+
+      if (sessionError) throw sessionError;
+
       const { error } = await supabase.from("submissions").insert([
         {
           user_id: user.id,
           question_id: problem.id,
+          session_id: sessionData.id,
           code,
           language: "javascript", // You might want to make this dynamic
-          hackathon_id: hackathonId,
+          approach: "Direct solution", // Default approach description
+          test_cases: "[]", // Default empty test cases
+          time_complexity: "O(n)", // Default time complexity
+          space_complexity: "O(n)", // Default space complexity
         },
       ]);
 
