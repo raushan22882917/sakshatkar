@@ -100,28 +100,28 @@ export type Database = {
       }
       hackathon_participants: {
         Row: {
-          id: string
+          created_at: string
           hackathon_id: string | null
-          user_id: string | null
+          id: string
           score: number | null
           time_spent: number | null
-          created_at: string
+          user_id: string | null
         }
         Insert: {
-          id?: string
+          created_at?: string
           hackathon_id?: string | null
-          user_id?: string | null
+          id?: string
           score?: number | null
           time_spent?: number | null
-          created_at?: string
+          user_id?: string | null
         }
         Update: {
-          id?: string
+          created_at?: string
           hackathon_id?: string | null
-          user_id?: string | null
+          id?: string
           score?: number | null
           time_spent?: number | null
-          created_at?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -130,42 +130,80 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "hackathons"
             referencedColumns: ["id"]
-          }
+          },
+        ]
+      }
+      hackathon_questions: {
+        Row: {
+          created_at: string
+          description: string
+          hackathon_id: string | null
+          id: string
+          points: number | null
+          test_cases: Json | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          hackathon_id?: string | null
+          id?: string
+          points?: number | null
+          test_cases?: Json | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          hackathon_id?: string | null
+          id?: string
+          points?: number | null
+          test_cases?: Json | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hackathon_questions_hackathon_id_fkey"
+            columns: ["hackathon_id"]
+            isOneToOne: false
+            referencedRelation: "hackathons"
+            referencedColumns: ["id"]
+          },
         ]
       }
       hackathons: {
         Row: {
-          id: string
-          title: string
-          description: string
-          start_date: string
-          end_date: string
-          rules: string | null
-          status: string
-          created_by: string | null
           created_at: string
+          created_by: string | null
+          description: string
+          end_date: string
+          id: string
+          rules: string | null
+          start_date: string
+          status: string
+          title: string
         }
         Insert: {
-          id?: string
-          title: string
-          description: string
-          start_date: string
-          end_date: string
-          rules?: string | null
-          status?: string
-          created_by?: string | null
           created_at?: string
+          created_by?: string | null
+          description: string
+          end_date: string
+          id?: string
+          rules?: string | null
+          start_date: string
+          status?: string
+          title: string
         }
         Update: {
-          id?: string
-          title?: string
-          description?: string
-          start_date?: string
-          end_date?: string
-          rules?: string | null
-          status?: string
-          created_by?: string | null
           created_at?: string
+          created_by?: string | null
+          description?: string
+          end_date?: string
+          id?: string
+          rules?: string | null
+          start_date?: string
+          status?: string
+          title?: string
         }
         Relationships: []
       }
@@ -425,7 +463,7 @@ export type Database = {
           date: string
           end_time: string
           group_id?: string | null
-          id: string
+          id?: string
           questions: string[]
           session_code: string
           start_time: string
@@ -688,7 +726,7 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
-          id: string
+          id?: string
           parent_id?: string | null
           title: string
         }
@@ -760,7 +798,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           end_date?: string | null
-          id: string
+          id?: string
           payment_id?: string | null
           payment_provider?: string | null
           start_date?: string | null
@@ -853,7 +891,7 @@ export type Tables<
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never,
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {

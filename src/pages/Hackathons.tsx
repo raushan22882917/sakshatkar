@@ -8,6 +8,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Calendar, Clock, Trophy, Users } from 'lucide-react';
 
+type HackathonStatus = 'upcoming' | 'ongoing' | 'past';
+
 interface Hackathon {
   id: string;
   title: string;
@@ -15,7 +17,9 @@ interface Hackathon {
   start_date: string;
   end_date: string;
   rules: string;
-  status: 'upcoming' | 'ongoing' | 'past';
+  status: HackathonStatus;
+  created_by: string;
+  created_at: string;
 }
 
 export default function Hackathons() {
@@ -38,7 +42,13 @@ export default function Hackathons() {
 
       if (error) throw error;
 
-      setHackathons(data || []);
+      // Cast the status to HackathonStatus type
+      const typedHackathons = (data || []).map(hackathon => ({
+        ...hackathon,
+        status: hackathon.status as HackathonStatus
+      }));
+
+      setHackathons(typedHackathons);
     } catch (error: any) {
       console.error('Error fetching hackathons:', error);
       toast({

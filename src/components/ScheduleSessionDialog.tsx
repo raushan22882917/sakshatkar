@@ -52,20 +52,18 @@ export function ScheduleSessionDialog({ open, onOpenChange, groupId }: ScheduleS
 
       if (groupError) throw groupError;
 
-      // Create the session
+      // Create the session - Note: removed the array wrapper
       const { data: sessionData, error: sessionError } = await supabase
         .from('peer_sessions')
-        .insert([
-          {
-            group_id: groupId,
-            date: startDate.toISOString().split('T')[0],
-            start_time: startDate.toTimeString().split(' ')[0],
-            end_time: endDate.toTimeString().split(' ')[0],
-            questions,
-            session_code: sessionCode,
-            created_by: user.id,
-          }
-        ])
+        .insert({
+          group_id: groupId,
+          date: startDate.toISOString().split('T')[0],
+          start_time: startDate.toTimeString().split(' ')[0],
+          end_time: endDate.toTimeString().split(' ')[0],
+          questions,
+          session_code: sessionCode,
+          created_by: user.id,
+        })
         .select()
         .single();
 
