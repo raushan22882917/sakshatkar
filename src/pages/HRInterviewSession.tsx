@@ -187,16 +187,15 @@ export default function HRInterviewSession() {
             <AIInterviewerIntro onIntroComplete={() => setIntroCompleted(true)} />
           ) : (
             questions[currentQuestionIndex] && (
-
               <InterviewQuestionCard
-                questions={questions}
+                questions={questions.map(q => q.question)}
                 transcription={transcription}
                 isRecording={isRecording}
                 onStartRecording={startRecording}
                 onStopRecording={stopRecording}
                 onSubmit={handleResponseSubmit}
               />
-
+            )
           )}
         </div>
       </div>
