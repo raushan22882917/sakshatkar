@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
 import { supabase } from "@/integrations/supabase/client";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,6 +26,22 @@ export default function Login() {
     }
   };
 
+  const getErrorMessage = (error: AuthError) => {
+    if (error instanceof AuthApiError) {
+      switch (error.code) {
+        case 'invalid_credentials':
+          return 'Invalid email or password. Please check your credentials and try again.';
+        case 'email_not_confirmed':
+          return 'Please verify your email address before signing in.';
+        case 'user_not_found':
+          return 'No user found with these credentials.';
+        default:
+          return error.message;
+      }
+    }
+    return error.message;
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -36,25 +53,12 @@ export default function Login() {
       });
 
       if (error) {
-        if (error.message.includes("Invalid login credentials")) {
-          toast({
-            title: "Login Failed",
-            description: "Please check your email and password and try again.",
-            variant: "destructive",
-          });
-        } else if (error.message.includes("Email not confirmed")) {
-          toast({
-            title: "Email Not Verified",
-            description: "Please check your email and verify your account before logging in.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Error",
-            description: error.message,
-            variant: "destructive",
-          });
-        }
+        const errorMessage = getErrorMessage(error);
+        toast({
+          title: "Login Failed",
+          description: errorMessage,
+          variant: "destructive",
+        });
         return;
       }
 
@@ -71,6 +75,7 @@ export default function Login() {
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
+      console.error("Login error:", error);
     } finally {
       setLoading(false);
     }

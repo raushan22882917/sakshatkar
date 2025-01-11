@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          email_verified: boolean | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email_verified?: boolean | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email_verified?: boolean | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       evaluations: {
         Row: {
           code_style_score: number
@@ -49,6 +70,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      free_trial_usage: {
+        Row: {
+          created_at: string | null
+          feature_type: string
+          id: string
+          last_used: string | null
+          usage_count: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          feature_type: string
+          id?: string
+          last_used?: string | null
+          usage_count?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          feature_type?: string
+          id?: string
+          last_used?: string | null
+          usage_count?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
       }
       hr_interview_questions: {
         Row: {
@@ -122,7 +170,22 @@ export type Database = {
           timer_completed?: boolean | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "hr_interviews_profile_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hr_interviews_profile_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_statistics"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       interview_responses: {
         Row: {
@@ -470,6 +533,111 @@ export type Database = {
           },
         ]
       }
+      technical_questions: {
+        Row: {
+          created_at: string
+          difficulty: string
+          expected_answer: string | null
+          id: string
+          question: string
+          topic_id: string
+        }
+        Insert: {
+          created_at?: string
+          difficulty: string
+          expected_answer?: string | null
+          id?: string
+          question: string
+          topic_id: string
+        }
+        Update: {
+          created_at?: string
+          difficulty?: string
+          expected_answer?: string | null
+          id?: string
+          question?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "technical_questions_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "technical_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      technical_responses: {
+        Row: {
+          created_at: string
+          feedback: string | null
+          id: string
+          question_id: string
+          response: string
+          score: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          question_id: string
+          response: string
+          score?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          question_id?: string
+          response?: string
+          score?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "technical_responses_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "technical_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      technical_topics: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          parent_id: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          parent_id?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          parent_id?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "technical_topics_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "technical_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_notifications: {
         Row: {
           created_at: string
@@ -505,6 +673,60 @@ export type Database = {
           },
         ]
       }
+      user_subscriptions: {
+        Row: {
+          created_at: string | null
+          end_date: string | null
+          id: string
+          payment_id: string | null
+          payment_provider: string | null
+          start_date: string | null
+          subscription_type:
+            | Database["public"]["Enums"]["subscription_type"]
+            | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          payment_id?: string | null
+          payment_provider?: string | null
+          start_date?: string | null
+          subscription_type?:
+            | Database["public"]["Enums"]["subscription_type"]
+            | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          payment_id?: string | null
+          payment_provider?: string | null
+          start_date?: string | null
+          subscription_type?:
+            | Database["public"]["Enums"]["subscription_type"]
+            | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_subscriptions_profile_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_subscriptions_profile_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_statistics"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Views: {
       daily_user_scores: {
@@ -515,12 +737,35 @@ export type Database = {
         }
         Relationships: []
       }
+      user_statistics: {
+        Row: {
+          college: string | null
+          email: string | null
+          name: string | null
+          total_interviews: number | null
+          total_practice_sessions: number | null
+          total_submissions: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      increment_trial_usage: {
+        Args: {
+          feature: string
+        }
+        Returns: boolean
+      }
+      is_admin: {
+        Args: {
+          user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      subscription_type: "free" | "pro" | "enterprise"
     }
     CompositeTypes: {
       [_ in never]: never
