@@ -4,12 +4,8 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-// Add type declaration for WebkitSpeechRecognition
-declare global {
-  interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
-  }
+interface Window {
+  webkitSpeechRecognition: any;
 }
 
 interface InterviewQuestionCardProps {
@@ -113,7 +109,7 @@ export function InterviewQuestionCard({
 
     recognition.onresult = (event: any) => {
       const speechToText = Array.from(event.results)
-        .map((result) => result[0].transcript)
+        .map((result: any) => result[0].transcript)
         .join(" ");
       const updatedResponses = [...userResponse];
       updatedResponses[currentQuestionIndex] = speechToText;
@@ -124,7 +120,7 @@ export function InterviewQuestionCard({
       onStopRecording();
     };
 
-    recognition.onerror = (event) => {
+    recognition.onerror = (event: any) => {
       console.error("Speech recognition error: ", event);
     };
 
