@@ -171,6 +171,41 @@ export type Database = {
           },
         ]
       }
+      hackathon_test_cases: {
+        Row: {
+          created_at: string
+          expected_output: string
+          id: string
+          input: string
+          is_hidden: boolean | null
+          question_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          expected_output: string
+          id?: string
+          input: string
+          is_hidden?: boolean | null
+          question_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          expected_output?: string
+          id?: string
+          input?: string
+          is_hidden?: boolean | null
+          question_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hackathon_test_cases_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "hackathon_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hackathons: {
         Row: {
           created_at: string
