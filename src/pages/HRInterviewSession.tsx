@@ -187,25 +187,16 @@ export default function HRInterviewSession() {
             <AIInterviewerIntro onIntroComplete={() => setIntroCompleted(true)} />
           ) : (
             questions[currentQuestionIndex] && (
+
               <InterviewQuestionCard
-                currentQuestion={questions[currentQuestionIndex].question}
-                questionNumber={currentQuestionIndex + 1}
-                totalQuestions={MAX_QUESTIONS}
+                questions={questions}
                 transcription={transcription}
                 isRecording={isRecording}
                 onStartRecording={startRecording}
                 onStopRecording={stopRecording}
-                onNextQuestion={async () => {
-                  const isComplete = await handleResponseSubmit();
-                  if (currentQuestionIndex < MAX_QUESTIONS - 1) {
-                    setCurrentQuestionIndex(prev => prev + 1);
-                    setTranscription('');
-                  } else if (isComplete) {
-                    navigate('/dashboard');
-                  }
-                }}
+                onSubmit={handleResponseSubmit}
               />
-            )
+
           )}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, Users, UserCheck, Building, UserCog, Code, Star, Heart, ThumbsUp,BookOpen, FileText } from "lucide-react";
+import { User, Users, UserCheck, Building, UserCog, Code, Star, Heart, ThumbsUp, BookOpen, FileText } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -247,7 +247,9 @@ export default function Index() {
         
       </main>
       <Footer />
-      <style jsx>{`
+
+      <style>
+        {`
         @keyframes floating {
           0%, 100% {
             transform: translateY(0);
@@ -279,7 +281,8 @@ export default function Index() {
           -webkit-background-clip: text;
           color: transparent;
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 }
