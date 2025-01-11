@@ -4,8 +4,11 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-interface Window {
-  webkitSpeechRecognition: any;
+declare global {
+  interface Window {
+    SpeechRecognition: typeof SpeechRecognition;
+    webkitSpeechRecognition: typeof SpeechRecognition;
+  }
 }
 
 interface InterviewQuestionCardProps {
@@ -107,9 +110,9 @@ export function InterviewQuestionCard({
     recognition.interimResults = true;
     recognition.maxAlternatives = 1;
 
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
       const speechToText = Array.from(event.results)
-        .map((result: any) => result[0].transcript)
+        .map((result) => result[0].transcript)
         .join(" ");
       const updatedResponses = [...userResponse];
       updatedResponses[currentQuestionIndex] = speechToText;
@@ -120,7 +123,7 @@ export function InterviewQuestionCard({
       onStopRecording();
     };
 
-    recognition.onerror = (event: any) => {
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       console.error("Speech recognition error: ", event);
     };
 
