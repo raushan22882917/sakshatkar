@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { MessageSquarePlus, ThumbsUp, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Question {
   id: string;
@@ -28,6 +29,7 @@ export function AskQuestion() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const { data: questions, refetch } = useQuery({
     queryKey: ["community-questions"],
@@ -47,10 +49,21 @@ export function AskQuestion() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to post a question.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const { error } = await supabase.from("community_questions").insert({
         title,
         content,
+        user_id: user.id
       });
 
       if (error) throw error;
@@ -74,10 +87,20 @@ export function AskQuestion() {
   };
 
   const handleAddResponse = async (questionId: string, response: string) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to post a response.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const { error } = await supabase.from("question_responses").insert({
         question_id: questionId,
         content: response,
+        user_id: user.id
       });
 
       if (error) throw error;
