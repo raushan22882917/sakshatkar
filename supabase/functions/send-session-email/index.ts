@@ -56,7 +56,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Sakshatkar <onboarding@resend.dev>",
+        from: "CodePractice <onboarding@resend.dev>",
         to: [testEmail], // Only send to test email during development
         subject: `New Practice Session - ${sessionDetails.groupName}`,
         html: emailHtml,

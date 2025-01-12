@@ -2,7 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/Navbar";
-import { Users, MessageSquare, Trophy, Calendar, BookOpen, Target } from 'lucide-react';
+import { Users, MessageSquare, Trophy, Calendar, BookOpen, Target } from "lucide-react";
+import { useState } from "react";
 
 const features = [
   {
@@ -65,6 +66,25 @@ const upcomingEvents = [
 ];
 
 export function Community() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  const onlineUsers = [
+    { name: "Alice", profilePic: "/images/alice.jpg" },
+    { name: "Bob", profilePic: "/images/bob.jpg" },
+    { name: "Charlie", profilePic: "/images/charlie.jpg" },
+    { name: "David", profilePic: "/images/david.jpg" },
+    { name: "Eve", profilePic: "/images/eve.jpg" },
+  ];
+
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      setMessages([...messages, { user: "You", text: message }]);
+      setMessage("");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
@@ -78,83 +98,107 @@ export function Community() {
           </p>
         </div>
 
-        {/* Newsletter Signup */}
-        <Card className="mb-12">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold mb-2">Stay Updated</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Subscribe to our newsletter for community updates and events
-                </p>
+        {/* Start Chat Button */}
+        <div className="text-center mb-6">
+          <Button onClick={() => setIsChatOpen(true)} className="bg-blue-500 hover:bg-blue-700">
+            Start Chat
+          </Button>
+        </div>
+
+        {/* Chat Room */}
+        {isChatOpen && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-96 h-[500px] flex flex-col overflow-hidden">
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+                <h2 className="text-xl font-semibold">Chat Room</h2>
+                <Button onClick={() => setIsChatOpen(false)} className="text-white hover:text-gray-200">
+                  X
+                </Button>
               </div>
-              <div className="flex w-full md:w-auto gap-2">
+
+              <div className="p-4 border-b bg-gray-100 dark:bg-gray-700">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Online Users</h3>
+                <div className="space-y-3">
+                  {onlineUsers.map((user, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <img
+                        src={user.profilePic}
+                        alt={user.name}
+                        className="w-12 h-12 rounded-full border-2 border-blue-500"
+                      />
+                      <span className="text-gray-800 dark:text-gray-100 font-medium">{user.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                <div className="space-y-4">
+                  {messages.map((msg, index) => (
+                    <div key={index} className="flex justify-start space-x-2">
+                      <div className="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg max-w-xs shadow-md">
+                        <p className="text-gray-800 dark:text-gray-100">
+                          <strong>{msg.user}</strong>: {msg.text}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 border-t bg-gray-100 dark:bg-gray-700 flex items-center">
                 <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="max-w-sm"
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Type a message"
+                  className="flex-1 rounded-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100"
                 />
-                <Button>Subscribe</Button>
+                <Button onClick={handleSendMessage} className="ml-3 bg-blue-500 hover:bg-blue-700 text-white rounded-full p-2">
+                  Send
+                </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        )}
 
-        {/* Community Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {/* Features Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {features.map((feature, index) => (
-            <Card key={index} className="relative overflow-hidden">
-              <div className="absolute top-2 right-2">
-                <span className="px-2 py-1 text-xs font-semibold text-purple-600 bg-purple-100 rounded-full">
-                  {feature.status}
-                </span>
-              </div>
-              <CardHeader className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <feature.icon className="w-6 h-6 text-purple-500" />
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
-                </div>
+            <Card key={index} className="border-2 border-gray-200 dark:border-gray-700">
+              <CardHeader>
+                <feature.icon className="h-6 w-6 text-blue-500" />
+                <CardTitle>{feature.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {feature.description}
-                </p>
+                <p className="text-gray-700 dark:text-gray-300">{feature.description}</p>
+                <p className="text-gray-500 dark:text-gray-400">{feature.status}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Upcoming Events */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl">Upcoming Events</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-6">
-              {upcomingEvents.map((event, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
-                >
-                  <div className="space-y-1">
-                    <h4 className="font-semibold">{event.title}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {event.date} at {event.time}
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
-                      {event.type}
-                    </span>
-                    <Button variant="outline" size="sm">
-                      Join
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-4">
+            Upcoming Events
+          </h2>
+          <div className="space-y-4">
+            {upcomingEvents.map((event, index) => (
+              <Card key={index} className="border-2 border-gray-200 dark:border-gray-700">
+                <CardHeader>
+                  <h3 className="text-xl text-gray-800 dark:text-gray-100">{event.title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {event.date} at {event.time}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700 dark:text-gray-300">{event.type}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

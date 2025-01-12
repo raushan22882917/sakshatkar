@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, DollarSign, Info, LogIn, HelpCircle, Plus, Minus, Grid, Bell, Settings, Code } from 'lucide-react';
+import { Home, Users, DollarSign, Info, LogIn, HelpCircle, Plus, Minus, Grid, Bell, Settings } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -19,6 +19,7 @@ const navigationItems = [
     icon: Home, 
     url: '/' 
   },
+  
   { 
     title: 'Community', 
     icon: Users, 
@@ -33,11 +34,6 @@ const navigationItems = [
     title: 'About', 
     icon: Info, 
     url: '/about' 
-  },
-  { 
-    title: 'Hackathons', 
-    icon: Code, 
-    url: '/hackathons' 
   },
   { 
     title: 'Account Settings', 

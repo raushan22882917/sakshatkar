@@ -2,12 +2,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AdminRoute } from "@/components/AdminRoute";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import DevOpsFlow from "@/components/DevOpsFlow";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -24,8 +25,8 @@ import TeamCoding from "./pages/TeamCoding";
 import DevOpsPractice from "./pages/DevOpsPractice";
 import HRInterview from "./pages/HRInterview";
 import HRInterviewSession from "./pages/HRInterviewSession";
-import Admin from "./pages/Admin";
-import Hackathons from "./pages/Hackathons";
+import Settings from "./pages/Settings";
+import TechnicalRound from "./pages/TechnicalRound";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,7 +53,14 @@ const App = () => {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
-                    <Route path="/hackathons" element={<Hackathons />} />
+                    <Route 
+                      path="/settings" 
+                      element={
+                        <ProtectedRoute>
+                          <Settings />
+                        </ProtectedRoute>
+                      } 
+                    />
                     <Route 
                       path="/self-practice" 
                       element={
@@ -127,6 +135,14 @@ const App = () => {
                       } 
                     />
                     <Route 
+                      path="/devops-flow" 
+                      element={
+                        <ProtectedRoute>
+                          <DevOpsFlow />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
                       path="/hr-interview" 
                       element={
                         <ProtectedRoute>
@@ -143,11 +159,11 @@ const App = () => {
                       } 
                     />
                     <Route 
-                      path="/admin" 
+                      path="/technical-round" 
                       element={
-                        <AdminRoute>
-                          <Admin />
-                        </AdminRoute>
+                        <ProtectedRoute>
+                          <TechnicalRound />
+                        </ProtectedRoute>
                       } 
                     />
                   </Routes>
