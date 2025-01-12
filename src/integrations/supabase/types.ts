@@ -30,6 +30,33 @@ export type Database = {
         }
         Relationships: []
       }
+      community_questions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          likes: number | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          likes?: number | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          likes?: number | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       evaluations: {
         Row: {
           code_style_score: number
@@ -553,6 +580,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      question_responses: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          likes: number | null
+          question_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          likes?: number | null
+          question_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          likes?: number | null
+          question_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_responses_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "community_questions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       question_test_cases: {
         Row: {

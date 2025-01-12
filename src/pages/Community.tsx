@@ -2,8 +2,9 @@ import { Navbar } from "@/components/Navbar";
 import { StudyGroups } from "@/components/community/StudyGroups";
 import { ResourceSharing } from "@/components/community/ResourceSharing";
 import { Mentorship } from "@/components/community/Mentorship";
+import { AskQuestion } from "@/components/community/AskQuestion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, BookOpen, User } from "lucide-react";
+import { Users, BookOpen, User, MessageSquare } from "lucide-react";
 
 export function Community() {
   return (
@@ -20,7 +21,7 @@ export function Community() {
         </div>
 
         <Tabs defaultValue="study-groups" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-3 lg:w-1/2 lg:mx-auto">
+          <TabsList className="grid w-full grid-cols-4 lg:w-1/2 lg:mx-auto">
             <TabsTrigger value="study-groups" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               Study Groups
@@ -32,6 +33,10 @@ export function Community() {
             <TabsTrigger value="mentorship" className="flex items-center gap-2">
               <User className="h-4 w-4" />
               Mentorship
+            </TabsTrigger>
+            <TabsTrigger value="ask-question" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              Ask Question
             </TabsTrigger>
           </TabsList>
 
@@ -45,6 +50,10 @@ export function Community() {
 
           <TabsContent value="mentorship">
             <Mentorship />
+          </TabsContent>
+
+          <TabsContent value="ask-question">
+            <AskQuestion />
           </TabsContent>
         </Tabs>
       </div>
