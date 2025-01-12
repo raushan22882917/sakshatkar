@@ -12,6 +12,7 @@ import DevOpsFlow from "@/components/DevOpsFlow";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AuthCallback from "./pages/AuthCallback";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Topics from "./pages/Topics";
@@ -51,6 +52,7 @@ const App = () => {
                     <Route path="/" element={<Index />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
                     <Route 

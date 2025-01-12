@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
 import { supabase } from "@/integrations/supabase/client";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -76,6 +77,25 @@ export default function Login() {
     }
   };
 
+  const handleSocialLogin = async (provider: 'google' | 'github') => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#e2d1c3] dark:from-gray-900 dark:to-gray-800">
       <Navbar />
@@ -116,6 +136,39 @@ export default function Login() {
               >
                 {loading ? "Logging in..." : "Login"}
               </Button>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-white px-2 text-muted-foreground">
+                    Or continue with
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handleSocialLogin('google')}
+                  className="w-full"
+                >
+                  <FaGoogle className="mr-2 h-4 w-4" />
+                  Google
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handleSocialLogin('github')}
+                  className="w-full"
+                >
+                  <FaGithub className="mr-2 h-4 w-4" />
+                  GitHub
+                </Button>
+              </div>
+
               <Button
                 type="button"
                 variant="ghost"
