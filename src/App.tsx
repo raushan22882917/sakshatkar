@@ -6,6 +6,7 @@ import Signup from "@/pages/Signup";
 import Dashboard from "@/pages/Dashboard";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import AuthCallback from "@/pages/AuthCallback";
+import { BrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -36,9 +37,11 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }

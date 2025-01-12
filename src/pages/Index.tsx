@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, Users, UserCheck, Building, UserCog, Code, Star, Heart, ThumbsUp,BookOpen, FileText } from "lucide-react";
+import { User, Users, UserCheck, Building, UserCog, Code, Star, Heart, ThumbsUp, BookOpen, FileText } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -141,7 +141,6 @@ export default function Index() {
     setShowWelcome(false);
   };
 
-
   function toggleAnswer(index) {
     const answer = document.getElementById(`answer-${index}`);
     if (answer.classList.contains("hidden")) {
@@ -155,161 +154,158 @@ export default function Index() {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#e2d1c3] dark:from-gray-900 dark:to-gray-800">
       <Navbar />
       <main className="flex-1 container py-12">
-  {!showWelcome && (
-    <div className="space-y-12">
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 animate-fade-in">
-        {practiceModes.map((mode) => (
-          <PracticeModeCard key={mode.title} {...mode} />
-        ))}
-      </div>
-    </div>
-  )}
+        {!showWelcome && (
+          <div className="space-y-12">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 animate-fade-in">
+              {practiceModes.map((mode) => (
+                <PracticeModeCard key={mode.title} {...mode} />
+              ))}
+            </div>
+          </div>
+        )}
 
-{showWelcome && (
-  <>
-    <div className="flex flex-col md:flex-row items-center justify-between h-full space-y-6 md:space-y-0">
-      <div className="md:w-1/2 text-left space-y-6">
-        <h1 className="text-4xl font-bold text-gradient">
-          <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-transparent bg-clip-text">
-            {currentText}
-          </span>
-        </h1>
-        <p>
-          Welcome to our coding platform, where learning, practicing, and mastering coding skills come together to unlock your full potential! We offer comprehensive interview-related materials, including resources for HR rounds, technical rounds, and coding rounds to help you succeed.
-        </p>
+        {showWelcome && (
+          <>
+            <div className="flex flex-col md:flex-row items-center justify-between h-full space-y-6 md:space-y-0">
+              <div className="md:w-1/2 text-left space-y-6">
+                <h1 className="text-4xl font-bold text-gradient">
+                  <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-transparent bg-clip-text">
+                    {currentText}
+                  </span>
+                </h1>
+                <p>
+                  Welcome to our coding platform, where learning, practicing, and mastering coding skills come together to unlock your full potential! We offer comprehensive interview-related materials, including resources for HR rounds, technical rounds, and coding rounds to help you succeed.
+                </p>
 
-        <button
-          onClick={handleGetStarted}
-          className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition duration-300"
-        >
-          Get Started
-        </button>
-      </div>
-      <div className="relative md:w-1/2">
-        <img
-          src="back.png"
-          alt="Welcome"
-          className="w-2/3 max-w-md rounded-lg shadow-lg animate-floating"
-        />
-      </div>
-    </div>
+                <button
+                  onClick={handleGetStarted}
+                  className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition duration-300"
+                >
+                  Get Started
+                </button>
+              </div>
+              <div className="relative md:w-1/2">
+                <img
+                  src="back.png"
+                  alt="Welcome"
+                  className="w-2/3 max-w-md rounded-lg shadow-lg animate-floating"
+                />
+              </div>
+            </div>
 
-    {/* Trusted Numbers Section */}
-    <div className="py-12 bg-gray-100 dark:bg-gray-900 text-center">
-      <h2 className="text-3xl font-bold mb-6 text-gradient">
-        Why Trust Us?
-      </h2>
-      <div className="flex flex-col md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-12">
-        <div className="text-center">
-          <p className="text-4xl font-bold text-purple-600">50k+</p>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Trusted Users</p>
-        </div>
-        <div className="text-center">
-          <p className="text-4xl font-bold text-purple-600">200k+</p>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Questions Solved</p>
-        </div>
-        <div className="text-center">
-          <p className="text-4xl font-bold text-purple-600">1k+</p>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Resources Available</p>
-        </div>
-        <div className="text-center">
-          <p className="text-4xl font-bold text-purple-600">95%</p>
-          <p className="text-lg text-gray-600 dark:text-gray-400">User Satisfaction</p>
-        </div>
-      </div>
-    </div>
+            {/* Trusted Numbers Section */}
+            <div className="py-12 bg-gray-100 dark:bg-gray-900 text-center">
+              <h2 className="text-3xl font-bold mb-6 text-gradient">
+                Why Trust Us?
+              </h2>
+              <div className="flex flex-col md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-12">
+                <div className="text-center">
+                  <p className="text-4xl font-bold text-purple-600">50k+</p>
+                  <p className="text-lg text-gray-600 dark:text-gray-400">Trusted Users</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-4xl font-bold text-purple-600">200k+</p>
+                  <p className="text-lg text-gray-600 dark:text-gray-400">Questions Solved</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-4xl font-bold text-purple-600">1k+</p>
+                  <p className="text-lg text-gray-600 dark:text-gray-400">Resources Available</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-4xl font-bold text-purple-600">95%</p>
+                  <p className="text-lg text-gray-600 dark:text-gray-400">User Satisfaction</p>
+                </div>
+              </div>
+            </div>
 
-    {/* Showcase Section */}
-    <div className="flex flex-col space-y-12">
-      {/* Why Choose Us Section */}
-      <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-        <div className="relative md:w-1/2">
-          <img
-            src="back_g.jpeg"
-            alt="Why Choose Us"
-            style={{
-              width: '400px',
-              height: '300px',
-              margin: '100px',
-              animation: 'moveUpDown 2s ease-in-out infinite',
-            }}
-            className="rounded-lg shadow-lg"
-          />
-        </div>
-        <div className="md:w-1/2 text-left space-y-6">
-          <h2 className="text-3xl font-bold text-gradient relative">
-            Why Choose Us?
-            <span className="absolute bottom-[-10px] left-0 w-full border-t-4 border-t-transparent border-b-4 border-b-purple-600"></span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Explore our platform to enhance your coding skills with practical exercises, interview preparation resources, and real-world challenges. Our user-focused design ensures a seamless and effective learning experience.
-          </p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Comprehensive coding tutorials and resources</li>
-            <li>Expert guidance for HR, tech, and coding rounds</li>
-            <li>Interactive practice modes to sharpen your skills</li>
-          </ul>
-        </div>
-      </div>
+            {/* Showcase Section */}
+            <div className="flex flex-col space-y-12">
+              {/* Why Choose Us Section */}
+              <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+                <div className="relative md:w-1/2">
+                  <img
+                    src="back_g.jpeg"
+                    alt="Why Choose Us"
+                    style={{
+                      width: '400px',
+                      height: '300px',
+                      margin: '100px',
+                      animation: 'moveUpDown 2s ease-in-out infinite',
+                    }}
+                    className="rounded-lg shadow-lg"
+                  />
+                </div>
+                <div className="md:w-1/2 text-left space-y-6">
+                  <h2 className="text-3xl font-bold text-gradient relative">
+                    Why Choose Us?
+                    <span className="absolute bottom-[-10px] left-0 w-full border-t-4 border-t-transparent border-b-4 border-b-purple-600"></span>
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-400">
+                    Explore our platform to enhance your coding skills with practical exercises, interview preparation resources, and real-world challenges. Our user-focused design ensures a seamless and effective learning experience.
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Comprehensive coding tutorials and resources</li>
+                    <li>Expert guidance for HR, tech, and coding rounds</li>
+                    <li>Interactive practice modes to sharpen your skills</li>
+                  </ul>
+                </div>
+              </div>
 
-      {/* What We Offer Section */}
-      <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-        <div className="md:w-1/2 text-left space-y-6">
-          <h2 className="text-3xl font-bold text-gradient relative">
-            What We Offer
-            <span className="absolute bottom-[-10px] left-0 w-full border-t-4 border-t-transparent border-b-4 border-b-purple-600"></span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Take advantage of our carefully designed modules and tools that cater to every learning style. We offer the best resources to make coding accessible, fun, and engaging for all skill levels.
-          </p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Customizable coding environments</li>
-            <li>Step-by-step interview preparation guides</li>
-            <li>Access to exclusive projects and challenges</li>
-          </ul>
-        </div>
+              {/* What We Offer Section */}
+              <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+                <div className="md:w-1/2 text-left space-y-6">
+                  <h2 className="text-3xl font-bold text-gradient relative">
+                    What We Offer
+                    <span className="absolute bottom-[-10px] left-0 w-full border-t-4 border-t-transparent border-b-4 border-b-purple-600"></span>
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-400">
+                    Take advantage of our carefully designed modules and tools that cater to every learning style. We offer the best resources to make coding accessible, fun, and engaging for all skill levels.
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Customizable coding environments</li>
+                    <li>Step-by-step interview preparation guides</li>
+                    <li>Access to exclusive projects and challenges</li>
+                  </ul>
+                </div>
 
-        <div className="relative md:w-1/2">
-          <img
-            src="oip.jpeg"
-            alt="What We Offer"
-            style={{
-              width: '300px',
-              height: '300px',
-              marginLeft: '150px',
-              animation: 'moveUpDown 2s ease-in-out infinite',
-            }}
-            className="rounded-lg shadow-lg"
-          />
-        </div>
-      </div>
-    </div>
+                <div className="relative md:w-1/2">
+                  <img
+                    src="oip.jpeg"
+                    alt="What We Offer"
+                    style={{
+                      width: '300px',
+                      height: '300px',
+                      marginLeft: '150px',
+                      animation: 'moveUpDown 2s ease-in-out infinite',
+                    }}
+                    className="rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
+            </div>
 
-    <style jsx>{`
-      @keyframes moveUpDown {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-      }
+            <style jsx>{`
+              @keyframes moveUpDown {
+                0%, 100% {
+                  transform: translateY(0);
+                }
+                50% {
+                  transform: translateY(-20px);
+                }
+              }
 
-      .text-gradient {
-        background: linear-gradient(to right, #6a11cb, #2575fc);
-        -webkit-background-clip: text;
-        color: transparent;
-      }
-    `}</style>
-  </>
-)}
+              .text-gradient {
+                background: linear-gradient(to right, #6a11cb, #2575fc);
+                -webkit-background-clip: text;
+                color: transparent;
+              }
+            `}</style>
+          </>
+        )}
 
-
-  
-
- {/* FAQ Section */}
- <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
- <div className="relative md:w-1/2">
+        {/* FAQ Section */}
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+          <div className="relative md:w-1/2">
             <img
               src="faq.jpeg"
               alt="FAQs"
@@ -375,40 +371,32 @@ export default function Index() {
               </li>
             </ul>
           </div>
-         
         </div>
 
-
-
-
-  {showWelcome && (
-    <div className="mt-12 space-y-8">
-      <div className="grid gap-6 md:grid-cols-3">
-        {feedbacks.slice(currentFeedbackIndex, currentFeedbackIndex + 3).map((feedback, index) => (
-          <div
-            key={index}
-            className="bg-transparent p-6 rounded-lg shadow-lg flex items-center space-x-4"
-          >
-            <img
-              src={feedback.profileImage}
-              alt={feedback.name}
-              className="w-12 h-12 rounded-full"
-            />
-            <div>
-              <p className="text-sm text-gradient">{feedback.message}</p>
-              <p className="text-lg font-semibold text-gradient">{feedback.name}</p>
+        {showWelcome && (
+          <div className="mt-12 space-y-8">
+            <div className="grid gap-6 md:grid-cols-3">
+              {feedbacks.slice(currentFeedbackIndex, currentFeedbackIndex + 3).map((feedback, index) => (
+                <div
+                  key={index}
+                  className="bg-transparent p-6 rounded-lg shadow-lg flex items-center space-x-4"
+                >
+                  <img
+                    src={feedback.profileImage}
+                    alt={feedback.name}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <div>
+                    <p className="text-sm text-gradient">{feedback.message}</p>
+                    <p className="text-lg font-semibold text-gradient">{feedback.name}</p>
+                  </div>
+                  <div className="ml-auto">{feedback.icon}</div>
+                </div>
+              ))}
             </div>
-            <div className="ml-auto">{feedback.icon}</div>
           </div>
-        ))}
-      </div>
-    </div>
-  )}
-
-
-  
-</main>
-
+        )}
+      </main>
 
       <Footer />
 
@@ -462,7 +450,5 @@ export default function Index() {
         `}
       </style>
     </div>
-    
   );
-  
 }
