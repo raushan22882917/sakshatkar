@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
 import { supabase } from "@/integrations/supabase/client";
-import { FaGoogle, FaGithub } from "react-icons/fa";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -77,25 +76,6 @@ export default function Login() {
     }
   };
 
-  const handleSocialLogin = async (provider: 'google' | 'github') => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-
-      if (error) throw error;
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#e2d1c3] dark:from-gray-900 dark:to-gray-800">
       <Navbar />
@@ -109,8 +89,8 @@ export default function Login() {
               Enter your credentials to login
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin}>
+            <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Input
                   type="email"
@@ -136,49 +116,16 @@ export default function Login() {
               >
                 {loading ? "Logging in..." : "Login"}
               </Button>
-            </form>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
               <Button
                 type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('google')}
+                variant="ghost"
                 className="w-full"
+                onClick={() => navigate("/signup")}
               >
-                <FaGoogle className="mr-2 h-4 w-4" />
-                Google
+                Don't have an account? Sign up
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('github')}
-                className="w-full"
-              >
-                <FaGithub className="mr-2 h-4 w-4" />
-                GitHub
-              </Button>
-            </div>
-
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => navigate("/signup")}
-              className="w-full"
-            >
-              Don't have an account? Sign up
-            </Button>
-          </CardContent>
+            </CardContent>
+          </form>
         </Card>
       </div>
     </div>

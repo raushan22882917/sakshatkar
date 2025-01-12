@@ -96,7 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session.user);
         const returnTo = location.state?.from || '/';
         navigate(returnTo);
-      } else if (event === 'SIGNED_OUT') {
+      } else if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
         setUser(null);
         navigate('/login');
       } else if (event === 'TOKEN_REFRESHED') {
