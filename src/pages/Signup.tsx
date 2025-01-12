@@ -27,15 +27,22 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#e2d1c3] dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-600/10 to-blue-600/10 backdrop-blur-sm">
       <Navbar />
       <div className="flex-1 container flex items-center justify-center py-12">
-        <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm">
+        <Card className="w-full max-w-md bg-white/30 backdrop-blur-md shadow-xl border-0">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text">
-              Create an Account
-            </CardTitle>
-            <CardDescription className="text-center">
+            <div className="flex flex-col items-center space-y-2">
+              <img
+                src="/logo.jpg"
+                alt="Sakshatkar Logo"
+                className="w-20 h-20 rounded-full object-cover"
+              />
+              <CardTitle className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+                Sakshatkar
+              </CardTitle>
+            </div>
+            <CardDescription className="text-center text-gray-600">
               Enter your details to create your account
             </CardDescription>
           </CardHeader>

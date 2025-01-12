@@ -97,16 +97,23 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#e2d1c3] dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-600/10 to-blue-600/10 backdrop-blur-sm">
       <Navbar />
       <div className="flex-1 container flex items-center justify-center py-12">
-        <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm">
+        <Card className="w-full max-w-md bg-white/30 backdrop-blur-md shadow-xl border-0">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">
-              Welcome Back
-            </CardTitle>
-            <CardDescription className="text-center">
-              Enter your credentials to login
+            <div className="flex flex-col items-center space-y-2">
+              <img
+                src="/logo.jpg"
+                alt="Sakshatkar Logo"
+                className="w-20 h-20 rounded-full object-cover"
+              />
+              <CardTitle className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+                Sakshatkar
+              </CardTitle>
+            </div>
+            <CardDescription className="text-center text-gray-600">
+              Welcome back! Enter your credentials to continue
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleLogin}>
@@ -118,6 +125,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  className="bg-white/50"
                 />
               </div>
               <div className="space-y-2">
@@ -127,11 +135,12 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  className="bg-white/50"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
                 disabled={loading}
               >
                 {loading ? "Logging in..." : "Login"}
@@ -142,7 +151,7 @@ export default function Login() {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-muted-foreground">
+                  <span className="bg-white/50 px-2 text-gray-600">
                     Or continue with
                   </span>
                 </div>
@@ -153,7 +162,7 @@ export default function Login() {
                   type="button"
                   variant="outline"
                   onClick={() => handleSocialLogin('google')}
-                  className="w-full"
+                  className="w-full bg-white/50 hover:bg-white/80"
                 >
                   <FaGoogle className="mr-2 h-4 w-4" />
                   Google
@@ -162,7 +171,7 @@ export default function Login() {
                   type="button"
                   variant="outline"
                   onClick={() => handleSocialLogin('github')}
-                  className="w-full"
+                  className="w-full bg-white/50 hover:bg-white/80"
                 >
                   <FaGithub className="mr-2 h-4 w-4" />
                   GitHub
@@ -172,7 +181,7 @@ export default function Login() {
               <Button
                 type="button"
                 variant="ghost"
-                className="w-full"
+                className="w-full hover:bg-white/20"
                 onClick={() => navigate("/signup")}
               >
                 Don't have an account? Sign up
