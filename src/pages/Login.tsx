@@ -9,9 +9,11 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" && session) {
-        navigate("/dashboard");
+        navigate("/");
       }
     });
 
@@ -19,49 +21,50 @@ export default function Login() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-600/10 to-blue-600/10 backdrop-blur-sm">
-      <div className="flex-1 container flex items-center justify-center py-12">
-        <Card className="w-full max-w-md bg-white/30 backdrop-blur-md shadow-xl border-0">
-          <CardHeader className="space-y-1">
-            <div className="flex flex-col items-center space-y-2">
-              <img
-                src="/logo.jpg"
-                alt="Sakshatkar Logo"
-                className="w-20 h-20 rounded-full object-cover"
-              />
-              <CardTitle className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                Sakshatkar
-              </CardTitle>
-            </div>
-            <CardDescription className="text-center text-gray-600">
-              Welcome back! Enter your credentials to continue
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Auth
-              supabaseClient={supabase}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: 'rgb(124 58 237)',
-                      brandAccent: 'rgb(99 102 241)',
+    <div className="min-h-screen flex items-center justify-center">
+      <Card className="w-full max-w-2xl shadow-lg border border-gray-200 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left Side - Animated Image */}
+          <div className="relative flex items-center justify-center bg-gradient-to-tr from-purple-600 via-blue-600 to-indigo-600">
+            <img
+              src="login.jpg"
+              alt="Login Animation"
+              className="w-full h-full object-cover opacity-80 animate-pulse"
+            />
+            <div className="absolute inset-0 bg-black/30" />
+            <h1 className="absolute text-white text-4xl font-bold drop-shadow-lg">Welcome Back</h1>
+          </div>
+
+          {/* Right Side - Login Form */}
+          <div className="p-8 flex flex-col justify-center">
+            <CardContent>
+              <CardHeader className="text-center mb-6">
+                <CardTitle className="text-3xl font-bold text-gray-800">Sign In</CardTitle>
+              </CardHeader>
+              <Auth
+                supabaseClient={supabase}
+                appearance={{
+                  theme: ThemeSupa,
+                  variables: {
+                    default: {
+                      colors: {
+                        brand: "#7c3aed",
+                        brandAccent: "#6366f1",
+                      },
                     },
                   },
-                },
-                className: {
-                  container: 'w-full',
-                  button: 'w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200',
-                  input: 'w-full px-3 py-2 border rounded-md bg-white/50',
-                },
-              }}
-              providers={["google", "github"]}
-              view="sign_in"
-            />
-          </CardContent>
-        </Card>
-      </div>
+                  className: {
+                    container: "w-full",
+                    button: "w-full py-2 px-4 text-sm rounded-lg shadow-md transition-all text-white font-medium",
+                  },
+                }}
+                providers={["google", "github"]}
+                view="sign_in"
+              />
+            </CardContent>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }
