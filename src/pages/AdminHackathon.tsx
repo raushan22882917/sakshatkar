@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreateHackathonForm } from "@/components/admin/CreateHackathonForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,6 +13,10 @@ interface Hackathon {
   start_date: string;
   end_date: string;
   status: "upcoming" | "ongoing" | "past";
+  banner_image_url?: string;
+  organization_image_url?: string;
+  prize_money?: number;
+  offerings?: string[];
 }
 
 export default function AdminHackathon() {
@@ -113,7 +116,6 @@ export default function AdminHackathon() {
             <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
             <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
             <TabsTrigger value="past">Past</TabsTrigger>
-            <TabsTrigger value="create">Create New</TabsTrigger>
           </TabsList>
 
           <TabsContent value="upcoming">
@@ -126,10 +128,6 @@ export default function AdminHackathon() {
 
           <TabsContent value="past">
             <HackathonList status="past" />
-          </TabsContent>
-
-          <TabsContent value="create">
-            <CreateHackathonForm />
           </TabsContent>
         </Tabs>
       </div>

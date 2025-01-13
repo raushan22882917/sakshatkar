@@ -33,6 +33,9 @@ import FAQ from "./pages/FAQ";
 import Coding from "./pages/Coding";
 import Resources from "./pages/Resources";
 import InterviewRounds from "./pages/InterviewRounds";
+import AdminHackathon from "./pages/AdminHackathon";
+import Hackathons from "./pages/Hackathons";
+import HackathonDetails from "./pages/HackathonDetails";
 
 const queryClient = new QueryClient({
   defaultOptions: {
