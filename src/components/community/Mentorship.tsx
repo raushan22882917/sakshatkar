@@ -25,17 +25,22 @@ export function Mentorship() {
 
   const fetchMentors = async () => {
     try {
+      console.log('Fetching mentors...');
       const { data, error } = await supabase
         .from('mentor_profiles')
         .select(`
           *,
-          profiles:user_id (
+          profile:user_id (
             name,
             profile_image_url
           )
         `);
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching mentors:', error);
+        throw error;
+      }
+      console.log('Fetched mentors:', data);
       setMentors(data || []);
     } catch (error) {
       console.error('Error fetching mentors:', error);
@@ -100,12 +105,12 @@ export function Mentorship() {
             <CardHeader>
               <div className="flex items-center gap-4">
                 <Avatar className="h-12 w-12">
-                  <AvatarImage src={mentor.profiles?.profile_image_url} alt={mentor.profiles?.name} />
+                  <AvatarImage src={mentor.profile?.profile_image_url} alt={mentor.profile?.name} />
                   <AvatarFallback>
-                    {mentor.profiles?.name?.split(" ").map((n: string) => n[0]).join("")}
+                    {mentor.profile?.name?.split(" ").map((n: string) => n[0]).join("")}
                   </AvatarFallback>
                 </Avatar>
-                <CardTitle className="text-lg">{mentor.profiles?.name}</CardTitle>
+                <CardTitle className="text-lg">{mentor.profile?.name}</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -134,7 +139,7 @@ export function Mentorship() {
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Book Session with {mentor.profiles?.name}</DialogTitle>
+                      <DialogTitle>Book Session with {mentor.profile?.name}</DialogTitle>
                     </DialogHeader>
                     <form onSubmit={handleBooking} className="space-y-4">
                       <div>
