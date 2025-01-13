@@ -9,7 +9,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { AdminRoute } from "@/components/AdminRoute";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import DevOpsFlow from "@/components/DevOpsFlow";
-import MLFlow from './components/MLFlow/MLFlow';
+
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -149,15 +149,6 @@ const App = () => {
                         </ProtectedRoute>
                       } 
                     />
-                   <Route 
-                    path="/ML-flow" 
-                    element={
-                      <ProtectedRoute>
-                        <MLFlow />
-                      </ProtectedRoute>
-                    } 
-                  />
-
                     <Route 
                       path="/hr-interview" 
                       element={

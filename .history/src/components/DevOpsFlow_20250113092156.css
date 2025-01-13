@@ -1,0 +1,36 @@
+.devops-flow-container {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1e293b, #334155);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .flow-node {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background: #2563eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .flow-node.completed {
+    background: #22c55e;
+  }
+  
+  .flow-node.flow-input {
+    background: #f43f5e;
+  }
+  
+  .react-flow__minimap {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  .react-flow__controls {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  

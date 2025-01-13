@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen } from "react-icons/fi"; // Add FiBookOpen for News icon
+import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown } from "react-icons/fi";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -48,10 +48,12 @@ export function Navbar() {
       } else {
         const { data: newProfile, error: insertError } = await supabase
           .from("profiles")
-          .upsert([{
-            id: user.id,
-            email: user.email,
-          }])
+          .upsert([
+            {
+              id: user.id,
+              email: user.email,
+            },
+          ])
           .select("name")
           .maybeSingle();
 
@@ -131,16 +133,6 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center space-x-4">
-          {/* News Link */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/news")}
-            className="flex items-center space-x-2"
-          >
-            <FiBookOpen className="w-6 h-6" /> {/* News icon */}
-            <span>News</span>
-          </Button>
-
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -189,7 +181,7 @@ export function Navbar() {
                 <Button variant="ghost" className="flex items-center space-x-2">
                   <FiUser className="w-5 h-5" />
                   <span>{profile?.name || user.email}</span>
-                  <FiChevronDown className="w-4 h-4" />
+                  <FiChevronDown className="w-4 h-4" /> {/* Dropdown icon */}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">

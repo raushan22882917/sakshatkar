@@ -18,9 +18,9 @@ export function PracticeModeCard({ title, description, icon: Icon, route }: Prac
       navigate("/devops-flow");
     } else {
       navigate(route);
-    }
-    if (title === "Machine Learning") {
-      navigate("/ML-flow");
+    },
+    if (title === "AI-Assisted DevOps") {
+      navigate("/devops-flow");
     } else {
       navigate(route);
     }

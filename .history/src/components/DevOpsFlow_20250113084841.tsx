@@ -1,7 +1,6 @@
 import React from 'react';
 import { ReactFlow, Background, Controls, MiniMap, useNodesState, useEdgesState, addEdge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import './DevOpsFlow.css'; // Import your custom CSS
 import FlowNode from './flow/FlowNode';
 import SubTopicPanel from './flow/SubTopicPanel';
 import { FlowNode as FlowNodeType } from '@/types/flow';
@@ -10,89 +9,136 @@ const initialNodes = [
   {
     id: '1',
     type: 'input',
-    data: {
+    data: { 
       label: 'DevOps Learning Path',
       subTopics: ['Introduction', 'Overview', 'Career Path'],
       completedSubTopics: []
     },
-    position: { x: 500, y: 50 },
+    position: { x: 400, y: 0 },
     className: 'flow-node'
   },
   {
     id: '2',
-    data: {
+    data: { 
       label: 'Programming Languages',
       subTopics: ['Python', 'JavaScript', 'Go', 'Ruby', 'Shell Scripting'],
       completedSubTopics: []
     },
-    position: { x: 300, y: 200 },
+    position: { x: 200, y: 100 },
     className: 'flow-node'
   },
   {
     id: '3',
-    data: {
+    data: { 
       label: 'Operating Systems',
       subTopics: ['Linux', 'Unix', 'Windows Server', 'Process Management', 'File Systems'],
       completedSubTopics: []
     },
-    position: { x: 700, y: 200 },
+    position: { x: 400, y: 100 },
     className: 'flow-node'
   },
   {
     id: '4',
-    data: {
+    data: { 
       label: 'Networking Basics',
       subTopics: ['TCP/IP', 'DNS', 'HTTP/HTTPS', 'SSL/TLS', 'Load Balancing'],
       completedSubTopics: []
     },
-    position: { x: 200, y: 400 },
+    position: { x: 600, y: 100 },
     className: 'flow-node'
   },
   {
     id: '5',
-    data: {
+    data: { 
       label: 'Version Control',
       subTopics: ['Git Basics', 'Branching', 'Merging', 'Git Flow', 'GitHub'],
       completedSubTopics: []
     },
-    position: { x: 800, y: 400 },
+    position: { x: 200, y: 200 },
     className: 'flow-node'
   },
   {
     id: '6',
-    data: {
+    data: { 
       label: 'CI/CD',
       subTopics: ['Jenkins', 'GitHub Actions', 'GitLab CI', 'Travis CI', 'CircleCI'],
+      completedSubTopics: []
+    },
+    position: { x: 400, y: 200 },
+    className: 'flow-node'
+  },
+  {
+    id: '7',
+    data: { 
+      label: 'Containers',
+      subTopics: ['Docker', 'Docker Compose', 'Container Security', 'Registry Management'],
+      completedSubTopics: []
+    },
+    position: { x: 600, y: 200 },
+    className: 'flow-node'
+  },
+  {
+    id: '8',
+    data: { 
+      label: 'Container Orchestration',
+      subTopics: ['Kubernetes', 'Docker Swarm', 'ECS', 'OpenShift'],
+      completedSubTopics: []
+    },
+    position: { x: 300, y: 300 },
+    className: 'flow-node'
+  },
+  {
+    id: '9',
+    data: { 
+      label: 'Infrastructure as Code',
+      subTopics: ['Terraform', 'CloudFormation', 'Ansible', 'Puppet', 'Chef'],
+      completedSubTopics: []
+    },
+    position: { x: 500, y: 300 },
+    className: 'flow-node'
+  },
+  {
+    id: '10',
+    data: { 
+      label: 'Cloud Platforms',
+      subTopics: ['AWS', 'Azure', 'Google Cloud', 'Cloud Architecture'],
+      completedSubTopics: []
+    },
+    position: { x: 300, y: 400 },
+    className: 'flow-node'
+  },
+  {
+    id: '11',
+    type: 'output',
+    data: { 
+      label: 'Monitoring & Logging',
+      subTopics: ['Prometheus', 'Grafana', 'ELK Stack', 'Application Monitoring'],
       completedSubTopics: []
     },
     position: { x: 500, y: 400 },
     className: 'flow-node'
   },
-  {
-    id: '7',
-    data: {
-      label: 'Monitoring & Logging',
-      subTopics: ['Prometheus', 'Grafana', 'ELK Stack', 'Application Monitoring'],
-      completedSubTopics: []
-    },
-    position: { x: 500, y: 600 },
-    className: 'flow-node'
-  }
 ];
 
 const initialEdges = [
-  { id: 'e1-2', source: '1', target: '2', animated: true, type: 'smoothstep', style: { stroke: 'gray', strokeDasharray: '5,5' } },
-  { id: 'e1-3', source: '1', target: '3', animated: true, type: 'smoothstep', style: { stroke: 'gray', strokeDasharray: '5,5' } },
-  { id: 'e2-4', source: '2', target: '4', animated: true, type: 'smoothstep', style: { stroke: 'gray', strokeDasharray: '5,5' } },
-  { id: 'e3-5', source: '3', target: '5', animated: true, type: 'smoothstep', style: { stroke: 'gray', strokeDasharray: '5,5' } },
-  { id: 'e2-6', source: '2', target: '6', animated: true, type: 'smoothstep', style: { stroke: 'gray', strokeDasharray: '5,5' } },
-  { id: 'e6-7', source: '6', target: '7', animated: true, type: 'smoothstep', style: { stroke: 'gray', strokeDasharray: '5,5' } }
+  { id: 'e1-2', source: '1', target: '2', animated: true, type: 'smoothstep' },
+  { id: 'e1-3', source: '1', target: '3', animated: true, type: 'smoothstep' },
+  { id: 'e1-4', source: '1', target: '4', animated: true, type: 'smoothstep' },
+  { id: 'e2-5', source: '2', target: '5', animated: true, type: 'smoothstep' },
+  { id: 'e3-6', source: '3', target: '6', animated: true, type: 'smoothstep' },
+  { id: 'e4-7', source: '4', target: '7', animated: true, type: 'smoothstep' },
+  { id: 'e5-8', source: '5', target: '8', animated: true, type: 'smoothstep' },
+  { id: 'e6-8', source: '6', target: '8', animated: true, type: 'smoothstep' },
+  { id: 'e7-9', source: '7', target: '9', animated: true, type: 'smoothstep' },
+  { id: 'e8-10', source: '8', target: '10', animated: true, type: 'smoothstep' },
+  { id: 'e9-11', source: '9', target: '11', animated: true, type: 'smoothstep' },
+  { id: 'e10-11', source: '10', target: '11', animated: true, type: 'smoothstep' },
 ];
 
 const nodeTypes = {
   default: FlowNode,
   input: FlowNode,
-  output: FlowNode
+  output: FlowNode,
 };
 
 const DevOpsFlow = () => {
@@ -122,7 +168,7 @@ const DevOpsFlow = () => {
             ...node,
             data: {
               ...node.data,
-              completedSubTopics: newCompletedSubTopics
+              completedSubTopics: newCompletedSubTopics,
             },
             className: `flow-node ${newCompletedSubTopics.length === (node.data.subTopics?.length || 0) ? 'completed' : ''}`
           };
@@ -154,8 +200,8 @@ const DevOpsFlow = () => {
       </ReactFlow>
 
       {selectedNode && (
-        <SubTopicPanel
-          node={selectedNode}
+        <SubTopicPanel 
+          node={selectedNode} 
           onComplete={handleSubTopicComplete}
           onClose={handleClosePanel}
         />

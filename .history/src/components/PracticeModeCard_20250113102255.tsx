@@ -20,7 +20,7 @@ export function PracticeModeCard({ title, description, icon: Icon, route }: Prac
       navigate(route);
     }
     if (title === "Machine Learning") {
-      navigate("/ML-flow");
+      navigate("/devops-flow");
     } else {
       navigate(route);
     }
