@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { User, Users, UserCheck, Building, UserCog, Code, Star, Heart, ThumbsUp, BookOpen, FileText } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PracticeModeCard } from "@/components/PracticeModeCard";
 
 const feedbacks = [
   {
@@ -82,34 +83,10 @@ const practiceModes = [
     title: "Technical Round Simulation",
     description: "Sharpen your technical skills with simulated problem-solving sessions.",
     icon: Code,
-    route: "/technical-round-simulation",
+    route: "/technical-round",
     image: "",
   },
 ];
-
-function PracticeModeCard({ title, description, icon: Icon, route, image }) {
-  return (
-    <a
-      href={route}
-      className="group block p-6 bg-transparent dark:bg-transparent rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition duration-300"
-    >
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-40 object-cover rounded-md mb-4"
-      />
-      <div className="flex items-center gap-4">
-        <Icon className="w-8 h-8 text-purple-600 group-hover:text-pink-600" />
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-          {title}
-        </h3>
-      </div>
-      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-        {description}
-      </p>
-    </a>
-  );
-}
 
 export default function Index() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -140,15 +117,6 @@ export default function Index() {
   const handleGetStarted = () => {
     setShowWelcome(false);
   };
-
-  function toggleAnswer(index) {
-    const answer = document.getElementById(`answer-${index}`);
-    if (answer.classList.contains("hidden")) {
-      answer.classList.remove("hidden");
-    } else {
-      answer.classList.add("hidden");
-    }
-  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdfcfb] to-[#e2d1c3] dark:from-gray-900 dark:to-gray-800">
@@ -305,76 +273,7 @@ export default function Index() {
           </>
         )}
 
-        {/* FAQ Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-          <div className="relative md:w-1/2">
-            <img
-              src="faq.jpeg"
-              alt="FAQs"
-              style={{
-                width: "300px",
-                height: "300px",
-                marginLeft: "150px",
-                animation: "moveUpDown 2s ease-in-out infinite",
-              }}
-              className="rounded-lg shadow-lg"
-            />
-          </div>
-          <div className="md:w-1/2 text-left space-y-6">
-            <h2 className="text-3xl font-bold text-gradient relative">
-              Frequently Asked Questions
-              <span className="absolute bottom-[-10px] left-0 w-full border-t-4 border-t-transparent border-b-4 border-b-purple-600"></span>
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
-              Have questions about our platform? Check out the most commonly asked questions below to find quick answers.
-            </p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>
-                <span className="flex items-center justify-between">
-                  <span>What is this platform about?</span>
-                  <button className="text-blue-500" onClick={() => toggleAnswer(0)}>+</button>
-                </span>
-                <p className="hidden" id="answer-0">This platform helps users prepare for interviews by providing resources, study materials, and a personalized experience.</p>
-              </li>
-              <li>
-                <span className="flex items-center justify-between">
-                  <span>How can I access interview preparation materials?</span>
-                  <button className="text-blue-500" onClick={() => toggleAnswer(1)}>+</button>
-                </span>
-                <p className="hidden" id="answer-1">You can access materials through our dashboard after signing up.</p>
-              </li>
-              <li>
-                <span className="flex items-center justify-between">
-                  <span>What are the benefits of premium features?</span>
-                  <button className="text-blue-500" onClick={() => toggleAnswer(2)}>+</button>
-                </span>
-                <p className="hidden" id="answer-2">Premium features include unlimited access to study materials, expert sessions, and advanced analytics.</p>
-              </li>
-              <li>
-                <span className="flex items-center justify-between">
-                  <span>How secure is my data on this platform?</span>
-                  <button className="text-blue-500" onClick={() => toggleAnswer(3)}>+</button>
-                </span>
-                <p className="hidden" id="answer-3">We prioritize data security using encryption and secure protocols.</p>
-              </li>
-              <li>
-                <span className="flex items-center justify-between">
-                  <span>Can I cancel my subscription anytime?</span>
-                  <button className="text-blue-500" onClick={() => toggleAnswer(4)}>+</button>
-                </span>
-                <p className="hidden" id="answer-4">Yes, you can cancel your subscription anytime from your account settings.</p>
-              </li>
-              <li>
-                <span className="flex items-center justify-between">
-                  <span>Is there a free trial available?</span>
-                  <button className="text-blue-500" onClick={() => toggleAnswer(5)}>+</button>
-                </span>
-                <p className="hidden" id="answer-5">Yes, we offer a 7-day free trial for new users.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-
+        {/* Testimonials Section */}
         {showWelcome && (
           <div className="mt-12 space-y-8">
             <div className="grid gap-6 md:grid-cols-3">

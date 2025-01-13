@@ -28,6 +28,10 @@ import HRInterview from "./pages/HRInterview";
 import HRInterviewSession from "./pages/HRInterviewSession";
 import Settings from "./pages/Settings";
 import TechnicalRound from "./pages/TechnicalRound";
+import FAQ from "./pages/FAQ";
+import Coding from "./pages/Coding";
+import Resources from "./pages/Resources";
+import InterviewRounds from "./pages/InterviewRounds";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +59,10 @@ const App = () => {
                     <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/coding" element={<Coding />} />
+                    <Route path="/resources" element={<Resources />} />
+                    <Route path="/interview-rounds" element={<InterviewRounds />} />
                     <Route path="/self-practice" element={<Topics />} />
                     <Route 
                       path="/settings" 
