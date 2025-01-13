@@ -13,6 +13,7 @@ import MLFlow from './components/MLFlow/MLFlow';
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import NewsPage from './pages/NewsPage';
 import AuthCallback from "./pages/AuthCallback";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -68,6 +69,7 @@ const App = () => {
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/interview-rounds" element={<InterviewRounds />} />
                     <Route path="/self-practice" element={<Topics />} />
+                    <Route path="/news" element={<NewsPage />} /> 
                     <Route 
                       path="/settings" 
                       element={
