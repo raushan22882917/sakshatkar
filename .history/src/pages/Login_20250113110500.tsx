@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/Navbar"; // Import Navbar
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,17 +22,25 @@ export default function Login() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
-      <Navbar /> {/* Add Navbar here */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-500">
+      <Card className="w-full max-w-2xl shadow-xl border-none rounded-3xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left Side - Image Section */}
+          <div className="relative flex items-center justify-center bg-gradient-to-tl from-purple-600 via-blue-600 to-indigo-600">
+            <img
+              src="login.jpg"
+              alt="Login Animation"
+              className="w-full h-full object-cover opacity-80 rounded-l-3xl transform transition duration-500 ease-in-out hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black/50 rounded-l-3xl" />
+            <h1 className="absolute text-white text-4xl font-extrabold drop-shadow-lg tracking-wide">Welcome Back</h1>
+          </div>
 
-      <div className="flex-grow flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <Card className="w-full max-w-sm shadow-lg border-none rounded-lg overflow-hidden">
-          <div className="flex flex-col justify-center bg-white dark:bg-gray-800 p-6 rounded-lg">
-            {/* Right Side - Login Form */}
+          {/* Right Side - Login Form */}
+          <div className="p-8 flex flex-col justify-center bg-white rounded-r-3xl shadow-lg">
             <CardContent>
-              <CardHeader className="text-center mb-6">
-                <CardTitle className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Sign In</CardTitle>
+              <CardHeader className="text-center mb-8">
+                <CardTitle className="text-3xl font-bold text-gray-800">Sign In</CardTitle>
               </CardHeader>
               <Auth
                 supabaseClient={supabase}
@@ -49,14 +56,14 @@ export default function Login() {
                   },
                   className: {
                     container: "w-full",
-                    button: "w-full py-3 px-6 text-sm rounded-lg shadow-md transition-all text-white font-medium hover:bg-purple-700 focus:ring-2 focus:ring-purple-600",
+                    button: "w-full py-3 px-6 text-sm rounded-lg shadow-md transition-all text-white font-semibold hover:bg-purple-700 focus:ring-2 focus:ring-purple-600",
                   },
                 }}
                 providers={["google", "github"]}
                 view="sign_in"
                 redirectTo={`${window.location.origin}/auth/callback`}
               />
-              <div className="mt-4 text-center">
+              <div className="mt-6 text-center">
                 <Button
                   variant="ghost"
                   onClick={() => navigate("/signup")}
@@ -67,8 +74,8 @@ export default function Login() {
               </div>
             </CardContent>
           </div>
-        </Card>
-      </div>
+        </div>
+      </Card>
     </div>
   );
 }

@@ -42,10 +42,18 @@ export default function Signup() {
         <Card className="w-full max-w-sm shadow-lg border-none rounded-lg overflow-hidden bg-white dark:bg-gray-800 p-6">
           <CardHeader className="space-y-4 text-center">
             <div className="flex flex-col items-center space-y-4">
+              <img
+                src="/logo.jpg"
+                alt="Sakshatkar Logo"
+                className="w-24 h-24 rounded-full object-cover"
+              />
               <CardTitle className="text-3xl font-bold text-gray-800 dark:text-gray-200 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                Register
+                Sakshatkar
               </CardTitle>
             </div>
+            <CardDescription className="text-gray-600 dark:text-gray-400">
+              Create your account to get started
+            </CardDescription>
           </CardHeader>
 
           <CardContent>

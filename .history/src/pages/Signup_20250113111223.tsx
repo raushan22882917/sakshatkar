@@ -43,7 +43,7 @@ export default function Signup() {
           <CardHeader className="space-y-4 text-center">
             <div className="flex flex-col items-center space-y-4">
               <CardTitle className="text-3xl font-bold text-gray-800 dark:text-gray-200 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                Register
+                Sakshatkar
               </CardTitle>
             </div>
           </CardHeader>

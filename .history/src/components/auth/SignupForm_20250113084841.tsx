@@ -56,12 +56,14 @@ export function SignupForm({ onGoogleSignup }: SignupFormProps) {
 
       const { error: profileError } = await supabase
         .from('profiles')
-        .insert([{
-          id: user.id,
-          name,
-          email,
-          college,
-        }])
+        .insert([
+          {
+            id: user.id,
+            name,
+            email,
+            college,
+          }
+        ])
         .select()
         .single();
 
@@ -112,7 +114,7 @@ export function SignupForm({ onGoogleSignup }: SignupFormProps) {
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
-        className="bg-white/50 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 placeholder-gray-600 border border-gray-300 dark:border-gray-600 rounded-md"
+        className="bg-white/50"
       />
       <Input
         type="email"
@@ -120,7 +122,7 @@ export function SignupForm({ onGoogleSignup }: SignupFormProps) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="bg-white/50 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 placeholder-gray-600 border border-gray-300 dark:border-gray-600 rounded-md"
+        className="bg-white/50"
       />
       <Input
         type="password"
@@ -129,7 +131,7 @@ export function SignupForm({ onGoogleSignup }: SignupFormProps) {
         onChange={(e) => setPassword(e.target.value)}
         required
         minLength={6}
-        className="bg-white/50 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 placeholder-gray-600 border border-gray-300 dark:border-gray-600 rounded-md"
+        className="bg-white/50"
       />
       <Input
         type="text"
@@ -137,7 +139,7 @@ export function SignupForm({ onGoogleSignup }: SignupFormProps) {
         value={college}
         onChange={(e) => setCollege(e.target.value)}
         required
-        className="bg-white/50 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 placeholder-gray-600 border border-gray-300 dark:border-gray-600 rounded-md"
+        className="bg-white/50"
       />
       <Button 
         type="submit" 

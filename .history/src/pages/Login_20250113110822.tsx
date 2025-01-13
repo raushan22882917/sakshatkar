@@ -27,13 +27,13 @@ export default function Login() {
       {/* Navbar */}
       <Navbar /> {/* Add Navbar here */}
 
-      <div className="flex-grow flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex-grow flex items-center justify-center bg-gray-50">
         <Card className="w-full max-w-sm shadow-lg border-none rounded-lg overflow-hidden">
-          <div className="flex flex-col justify-center bg-white dark:bg-gray-800 p-6 rounded-lg">
+          <div className="flex flex-col justify-center bg-white p-6 rounded-lg">
             {/* Right Side - Login Form */}
             <CardContent>
               <CardHeader className="text-center mb-6">
-                <CardTitle className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Sign In</CardTitle>
+                <CardTitle className="text-2xl font-semibold text-gray-800">Sign In</CardTitle>
               </CardHeader>
               <Auth
                 supabaseClient={supabase}
