@@ -55,19 +55,12 @@ const App = () => {
                     <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
+                    <Route path="/self-practice" element={<Topics />} />
                     <Route 
                       path="/settings" 
                       element={
                         <ProtectedRoute>
                           <Settings />
-                        </ProtectedRoute>
-                      } 
-                    />
-                    <Route 
-                      path="/self-practice" 
-                      element={
-                        <ProtectedRoute>
-                          <Topics />
                         </ProtectedRoute>
                       } 
                     />

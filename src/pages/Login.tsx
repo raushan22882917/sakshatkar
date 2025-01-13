@@ -4,6 +4,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Login() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" && session) {
-        navigate("/");
+        navigate("/dashboard");
       }
     });
 
@@ -60,7 +61,17 @@ export default function Login() {
                 }}
                 providers={["google", "github"]}
                 view="sign_in"
+                redirectTo={`${window.location.origin}/auth/callback`}
               />
+              <div className="mt-4 text-center">
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate("/signup")}
+                  className="text-purple-600 hover:text-purple-700"
+                >
+                  Don't have an account? Sign up
+                </Button>
+              </div>
             </CardContent>
           </div>
         </div>
