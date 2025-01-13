@@ -122,76 +122,77 @@ export function AppSidebar() {
           </button>
         </div>
 
-        {/* Help Modal (Popup above Need Help Button) */}
+        {/* Help Modal */}
         {showHelpModal && (
-  <div className="absolute bottom-16 left-[50px] w-96 bg-white dark:bg-gray-700 p-6 rounded-md shadow-lg z-50">
-    <button
-      onClick={() => setShowHelpModal(false)}
-      className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
-    >
-      ×
-    </button>
+          <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+            <div className="bg-white dark:bg-gray-700 p-6 rounded-md shadow-lg w-96">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Need Help?</h2>
 
-    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Need Help?</h2>
+              <div className="my-4">
+                <label htmlFor="question" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Select a Question</label>
+                <select
+                  id="question"
+                  value={selectedQuestion}
+                  onChange={handleQuestionChange}
+                  className="w-full mt-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                >
+                  <option value="">--Select a Question--</option>
+                  {questions.map((q) => (
+                    <option key={q.title} value={q.title}>{q.title}</option>
+                  ))}
+                </select>
+              </div>
 
-    <div className="my-4">
-      <label htmlFor="question" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Select a Question</label>
-      <select
-        id="question"
-        value={selectedQuestion}
-        onChange={handleQuestionChange}
-        className="w-full mt-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-      >
-        <option value="">--Select a Question--</option>
-        {questions.map((q) => (
-          <option key={q.title} value={q.title}>{q.title}</option>
-        ))}
-      </select>
-    </div>
+              {selectedQuestion && (
+                <div className="my-4">
+                  <label htmlFor="sub-question" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Sub-question</label>
+                  <select
+                    id="sub-question"
+                    className="w-full mt-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  >
+                    <option value="">--Select a Sub-question--</option>
+                    {subQuestions.map((sub, index) => (
+                      <option key={index} value={sub}>{sub}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
-    {selectedQuestion && (
-      <div className="my-4">
-        <label htmlFor="sub-question" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Sub-question</label>
-        <select
-          id="sub-question"
-          className="w-full mt-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-        >
-          <option value="">--Select a Sub-question--</option>
-          {subQuestions.map((sub, index) => (
-            <option key={index} value={sub}>{sub}</option>
-          ))}
-        </select>
-      </div>
-    )}
+              <div className="my-4">
+                <label htmlFor="user-query" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Query</label>
+                <textarea
+                  id="user-query"
+                  value={userQuery}
+                  onChange={(e) => setUserQuery(e.target.value)}
+                  className="w-full mt-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  placeholder="Type your query here..."
+                />
+              </div>
 
-    <div className="my-4">
-      <label htmlFor="user-query" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Query</label>
-      <textarea
-        id="user-query"
-        value={userQuery}
-        onChange={(e) => setUserQuery(e.target.value)}
-        className="w-full mt-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-        placeholder="Type your query here..."
-      />
-    </div>
+              <div className="flex justify-between space-x-2">
+                <button
+                  onClick={handleSubmitQuery}
+                  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+                >
+                  Submit
+                </button>
+                <button
+                  onClick={handleContactSupport}
+                  className="w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700"
+                >
+                  Contact Support
+                </button>
+              </div>
 
-    <div className="flex justify-between space-x-2">
-      <button
-        onClick={handleSubmitQuery}
-        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-      >
-        Submit
-      </button>
-      <button
-        onClick={handleContactSupport}
-        className="w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700"
-      >
-        Contact Support
-      </button>
-    </div>
-  </div>
-)}
-
+              <button
+                onClick={() => setShowHelpModal(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
       </SidebarContent>
     </Sidebar>
   );

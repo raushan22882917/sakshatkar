@@ -2,7 +2,14 @@ import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen, FiPhone } from "react-icons/fi"; // Add FiPhone for Contact icon
+import {
+  FiSun,
+  FiMoon,
+  FiUser,
+  FiBell,
+  FiChevronDown,
+  FiBookOpen,
+} from "react-icons/fi";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -48,10 +55,7 @@ export function Navbar() {
       } else {
         const { data: newProfile, error: insertError } = await supabase
           .from("profiles")
-          .upsert([{
-            id: user.id,
-            email: user.email,
-          }])
+          .upsert([{ id: user.id, email: user.email }])
           .select("name")
           .maybeSingle();
 
@@ -151,18 +155,8 @@ export function Navbar() {
             onClick={() => navigate("/news")}
             className="flex items-center space-x-2"
           >
-            <FiBookOpen className="w-6 h-6" /> {/* News icon */}
+            <FiBookOpen className="w-6 h-6" />
             <span>News</span>
-          </Button>
-
-          {/* Contact Link */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/contact")}
-            className="flex items-center space-x-2"
-          >
-            <FiPhone className="w-6 h-6" /> {/* Contact icon */}
-            <span>Contact</span>
           </Button>
 
           {/* Notifications */}

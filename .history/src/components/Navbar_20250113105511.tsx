@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen, FiPhone } from "react-icons/fi"; // Add FiPhone for Contact icon
+import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen } from "react-icons/fi"; // Add FiBookOpen for News icon
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -73,26 +73,12 @@ export function Navbar() {
 
   const fetchNotifications = async () => {
     try {
-      if (!user) return; // Ensure the user is logged in
-
-      const { data: notifications, error } = await supabase
-        .from("notifications")
-        .select("id, title, message, created_at, created_by, is_admin_notification")
-        .eq("created_by", user.id) // Fetch notifications specific to the logged-in user
-        .order("created_at", { ascending: false }); // Order by most recent notifications
-
-      if (error) {
-        console.error("Error fetching notifications:", error);
-        throw error;
-      }
-
-      // Remove duplicate notifications based on unique `id`
-      const uniqueNotifications = notifications?.filter(
-        (notification, index, self) =>
-          self.findIndex((n) => n.id === notification.id) === index
-      );
-
-      setNotifications(uniqueNotifications || []);
+      const fetchedNotifications = [
+        { message: "You have a new message", time: "2025-01-03 14:30:00" },
+        { message: "Your profile was updated", time: "2025-01-03 13:45:00" },
+        { message: "New task assigned to you", time: "2025-01-03 12:00:00" },
+      ];
+      setNotifications(fetchedNotifications);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -155,16 +141,6 @@ export function Navbar() {
             <span>News</span>
           </Button>
 
-          {/* Contact Link */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/contact")}
-            className="flex items-center space-x-2"
-          >
-            <FiPhone className="w-6 h-6" /> {/* Contact icon */}
-            <span>Contact</span>
-          </Button>
-
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -179,12 +155,11 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                  <DropdownMenuItem key={notification.id} className="flex flex-col">
-                    <span className="font-medium">{notification.title}</span>
-                    <span>{notification.message}</span>
+                notifications.map((notification, index) => (
+                  <DropdownMenuItem key={index} className="flex flex-col">
+                    <span className="font-medium">{notification.message}</span>
                     <span className="text-sm text-gray-500">
-                      {new Date(notification.created_at).toLocaleString()}
+                      {new Date(notification.time).toLocaleString()}
                     </span>
                   </DropdownMenuItem>
                 ))

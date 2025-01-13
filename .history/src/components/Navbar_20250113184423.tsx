@@ -48,10 +48,12 @@ export function Navbar() {
       } else {
         const { data: newProfile, error: insertError } = await supabase
           .from("profiles")
-          .upsert([{
-            id: user.id,
-            email: user.email,
-          }])
+          .upsert([
+            {
+              id: user.id,
+              email: user.email,
+            },
+          ])
           .select("name")
           .maybeSingle();
 
@@ -73,20 +75,19 @@ export function Navbar() {
 
   const fetchNotifications = async () => {
     try {
-      if (!user) return; // Ensure the user is logged in
+      if (!user) return;
 
       const { data: notifications, error } = await supabase
         .from("notifications")
         .select("id, title, message, created_at, created_by, is_admin_notification")
-        .eq("created_by", user.id) // Fetch notifications specific to the logged-in user
-        .order("created_at", { ascending: false }); // Order by most recent notifications
+        .eq("created_by", user.id)
+        .order("created_at", { ascending: false });
 
       if (error) {
         console.error("Error fetching notifications:", error);
         throw error;
       }
 
-      // Remove duplicate notifications based on unique `id`
       const uniqueNotifications = notifications?.filter(
         (notification, index, self) =>
           self.findIndex((n) => n.id === notification.id) === index
@@ -132,8 +133,9 @@ export function Navbar() {
 
   return (
     <nav className="border-b bg-white/50 backdrop-blur-sm dark:bg-gray-800/50">
-      <div className="container flex h-16 items-center px-4 justify-between">
-        <div className="flex items-center">
+      <div className="container flex flex-wrap h-auto px-4 justify-between">
+        {/* First Line: Brand and Sidebar */}
+        <div className="flex items-center w-full lg:w-auto mb-2 lg:mb-0">
           <SidebarTrigger className="mr-4" />
           <Button
             variant="ghost"
@@ -144,28 +146,28 @@ export function Navbar() {
           </Button>
         </div>
 
-        <div className="flex items-center space-x-4">
-          {/* News Link */}
+        {/* Second Line: Links */}
+        <div className="flex flex-wrap w-full lg:w-auto justify-between items-center mb-2 lg:mb-0 space-x-4">
           <Button
             variant="ghost"
             onClick={() => navigate("/news")}
             className="flex items-center space-x-2"
           >
-            <FiBookOpen className="w-6 h-6" /> {/* News icon */}
+            <FiBookOpen className="w-6 h-6" />
             <span>News</span>
           </Button>
-
-          {/* Contact Link */}
           <Button
             variant="ghost"
             onClick={() => navigate("/contact")}
             className="flex items-center space-x-2"
           >
-            <FiPhone className="w-6 h-6" /> {/* Contact icon */}
+            <FiPhone className="w-6 h-6" />
             <span>Contact</span>
           </Button>
+        </div>
 
-          {/* Notifications */}
+        {/* Third Line: Notifications, Dark Mode, and Profile */}
+        <div className="flex items-center w-full lg:w-auto space-x-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative">
@@ -194,20 +196,14 @@ export function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Dark Mode Toggle */}
           <Button
             variant="ghost"
             onClick={toggleDarkMode}
             className="text-lg font-semibold text-gray-800 dark:text-white"
           >
-            {isDarkMode ? (
-              <FiSun className="w-6 h-6" />
-            ) : (
-              <FiMoon className="w-6 h-6" />
-            )}
+            {isDarkMode ? <FiSun className="w-6 h-6" /> : <FiMoon className="w-6 h-6" />}
           </Button>
 
-          {/* User Profile */}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen, FiPhone } from "react-icons/fi"; // Add FiPhone for Contact icon
+import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen, FiPhone, FiMenu, FiX } from "react-icons/fi"; // Added FiMenu and FiX for hamburger menu
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -19,6 +19,7 @@ export function Navbar() {
   const { user, logout } = useAuth();
   const [profile, setProfile] = useState<any>(null);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [menuOpen, setMenuOpen] = useState(false); // State for hamburger menu
   const { toast } = useToast();
 
   useEffect(() => {
@@ -133,8 +134,8 @@ export function Navbar() {
   return (
     <nav className="border-b bg-white/50 backdrop-blur-sm dark:bg-gray-800/50">
       <div className="container flex h-16 items-center px-4 justify-between">
+        {/* Left Section: Logo */}
         <div className="flex items-center">
-          <SidebarTrigger className="mr-4" />
           <Button
             variant="ghost"
             onClick={() => navigate("/")}
@@ -144,95 +145,81 @@ export function Navbar() {
           </Button>
         </div>
 
+        {/* Right Section: Menu and Toggle */}
         <div className="flex items-center space-x-4">
-          {/* News Link */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/news")}
-            className="flex items-center space-x-2"
-          >
-            <FiBookOpen className="w-6 h-6" /> {/* News icon */}
-            <span>News</span>
-          </Button>
+          {/* Hamburger Menu for Mobile */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-lg font-semibold text-gray-800 dark:text-white"
+            >
+              {menuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+            </Button>
+          </div>
 
-          {/* Contact Link */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/contact")}
-            className="flex items-center space-x-2"
-          >
-            <FiPhone className="w-6 h-6" /> {/* Contact icon */}
-            <span>Contact</span>
-          </Button>
-
-          {/* Notifications */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative">
-                <FiBell className="w-6 h-6" />
-                {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-white text-xs">
-                    {notifications.length}
-                  </span>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                  <DropdownMenuItem key={notification.id} className="flex flex-col">
-                    <span className="font-medium">{notification.title}</span>
-                    <span>{notification.message}</span>
-                    <span className="text-sm text-gray-500">
-                      {new Date(notification.created_at).toLocaleString()}
-                    </span>
-                  </DropdownMenuItem>
-                ))
-              ) : (
-                <DropdownMenuItem>No new notifications</DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Dark Mode Toggle */}
-          <Button
-            variant="ghost"
-            onClick={toggleDarkMode}
-            className="text-lg font-semibold text-gray-800 dark:text-white"
-          >
-            {isDarkMode ? (
-              <FiSun className="w-6 h-6" />
-            ) : (
-              <FiMoon className="w-6 h-6" />
-            )}
-          </Button>
-
-          {/* User Profile */}
-          {user ? (
+          {/* Desktop Menu */}
+          <div className={`hidden md:flex items-center space-x-4`}>
+            <Button variant="ghost" onClick={() => navigate("/news")}>
+              News
+            </Button>
+            <Button variant="ghost" onClick={() => navigate("/contact")}>
+              Contact
+            </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2">
-                  <FiUser className="w-5 h-5" />
-                  <span>{profile?.name || user.email}</span>
-                  <FiChevronDown className="w-4 h-4" />
+                <Button variant="ghost">
+                  <FiBell className="w-6 h-6" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                  Dashboard
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout}>
-                  Logout
-                </DropdownMenuItem>
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <DropdownMenuItem key={notification.id} className="flex flex-col">
+                      <span className="font-medium">{notification.title}</span>
+                      <span>{notification.message}</span>
+                    </DropdownMenuItem>
+                  ))
+                ) : (
+                  <DropdownMenuItem>No new notifications</DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button variant="ghost" onClick={toggleDarkMode}>
+              {isDarkMode ? <FiSun className="w-6 h-6" /> : <FiMoon className="w-6 h-6" />}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div className="md:hidden flex flex-col space-y-2 p-4 bg-gray-100 dark:bg-gray-900">
+          <Button variant="ghost" onClick={() => navigate("/news")}>
+            News
+          </Button>
+          <Button variant="ghost" onClick={() => navigate("/contact")}>
+            Contact
+          </Button>
+          <Button variant="ghost" onClick={toggleDarkMode}>
+            {isDarkMode ? "Light Mode" : "Dark Mode"}
+          </Button>
+          {user ? (
+            <>
+              <Button variant="ghost" onClick={() => navigate("/dashboard")}>
+                Dashboard
+              </Button>
+              <Button variant="ghost" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
           ) : (
             <Button variant="ghost" onClick={() => navigate("/login")}>
               Login
             </Button>
           )}
         </div>
-      </div>
+      )}
     </nav>
   );
 }

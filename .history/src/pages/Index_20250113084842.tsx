@@ -149,7 +149,7 @@ export default function Index() {
                   onClick={handleGetStarted}
                   className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition duration-300"
                 >
-                  Our Services
+                  Get Started
                 </button>
               </div>
               <div className="relative md:w-1/2">

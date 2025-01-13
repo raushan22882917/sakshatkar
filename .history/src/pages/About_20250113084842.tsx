@@ -16,7 +16,7 @@ export default function About() {
             </p>
           </div>
 
-          <Card className=" backdrop-blur-sm">
+          <Card className="bg-white/80 backdrop-blur-sm">
             <CardContent className="p-6 space-y-6">
               <div className="space-y-4">
                 <h2 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text">

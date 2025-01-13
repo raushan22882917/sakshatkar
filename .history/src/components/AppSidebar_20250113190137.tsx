@@ -124,7 +124,7 @@ export function AppSidebar() {
 
         {/* Help Modal (Popup above Need Help Button) */}
         {showHelpModal && (
-  <div className="absolute bottom-16 left-[50px] w-96 bg-white dark:bg-gray-700 p-6 rounded-md shadow-lg z-50">
+  <div className="absolute bottom-16 left-[150px] w-96 bg-white dark:bg-gray-700 p-6 rounded-md shadow-lg z-50">
     <button
       onClick={() => setShowHelpModal(false)}
       className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"

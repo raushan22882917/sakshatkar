@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen, FiPhone } from "react-icons/fi"; // Add FiPhone for Contact icon
+import { FiSun, FiMoon, FiUser, FiBell, FiChevronDown, FiBookOpen } from "react-icons/fi"; // Add FiBookOpen for News icon
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -153,16 +153,6 @@ export function Navbar() {
           >
             <FiBookOpen className="w-6 h-6" /> {/* News icon */}
             <span>News</span>
-          </Button>
-
-          {/* Contact Link */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/contact")}
-            className="flex items-center space-x-2"
-          >
-            <FiPhone className="w-6 h-6" /> {/* Contact icon */}
-            <span>Contact</span>
           </Button>
 
           {/* Notifications */}
