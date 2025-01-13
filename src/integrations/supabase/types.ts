@@ -423,6 +423,83 @@ export type Database = {
         }
         Relationships: []
       }
+      mentor_bookings: {
+        Row: {
+          booking_date: string
+          created_at: string
+          end_time: string
+          id: string
+          mentor_id: string | null
+          start_time: string
+          status: string | null
+          student_id: string | null
+        }
+        Insert: {
+          booking_date: string
+          created_at?: string
+          end_time: string
+          id?: string
+          mentor_id?: string | null
+          start_time: string
+          status?: string | null
+          student_id?: string | null
+        }
+        Update: {
+          booking_date?: string
+          created_at?: string
+          end_time?: string
+          id?: string
+          mentor_id?: string | null
+          start_time?: string
+          status?: string | null
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_bookings_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentor_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentor_profiles: {
+        Row: {
+          availability: string | null
+          bio: string | null
+          created_at: string
+          expertise: string[]
+          hourly_rate: number | null
+          id: string
+          rating: number | null
+          total_sessions: number | null
+          user_id: string | null
+        }
+        Insert: {
+          availability?: string | null
+          bio?: string | null
+          created_at?: string
+          expertise: string[]
+          hourly_rate?: number | null
+          id?: string
+          rating?: number | null
+          total_sessions?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          availability?: string | null
+          bio?: string | null
+          created_at?: string
+          expertise?: string[]
+          hourly_rate?: number | null
+          id?: string
+          rating?: number | null
+          total_sessions?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
@@ -667,6 +744,60 @@ export type Database = {
           examples?: Json
           id?: string
           title?: string
+        }
+        Relationships: []
+      }
+      resource_downloads: {
+        Row: {
+          downloaded_at: string
+          id: string
+          resource_id: string
+          user_id: string
+        }
+        Insert: {
+          downloaded_at?: string
+          id?: string
+          resource_id: string
+          user_id: string
+        }
+        Update: {
+          downloaded_at?: string
+          id?: string
+          resource_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          author: string | null
+          created_at: string
+          description: string | null
+          downloads: number | null
+          id: string
+          title: string
+          type: string
+          url: string
+        }
+        Insert: {
+          author?: string | null
+          created_at?: string
+          description?: string | null
+          downloads?: number | null
+          id?: string
+          title: string
+          type: string
+          url: string
+        }
+        Update: {
+          author?: string | null
+          created_at?: string
+          description?: string | null
+          downloads?: number | null
+          id?: string
+          title?: string
+          type?: string
+          url?: string
         }
         Relationships: []
       }
