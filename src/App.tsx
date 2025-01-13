@@ -9,6 +9,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { AdminRoute } from "@/components/AdminRoute";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import DevOpsFlow from "@/components/DevOpsFlow";
+
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -166,6 +167,23 @@ const App = () => {
                       element={
                         <ProtectedRoute>
                           <TechnicalRound />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/admin/hackathons" 
+                      element={
+                        <AdminRoute>
+                          <AdminHackathon />
+                        </AdminRoute>
+                      } 
+                    />
+                    <Route path="/hackathons" element={<Hackathons />} />
+                    <Route 
+                      path="/hackathons/:id" 
+                      element={
+                        <ProtectedRoute>
+                          <HackathonDetails />
                         </ProtectedRoute>
                       } 
                     />

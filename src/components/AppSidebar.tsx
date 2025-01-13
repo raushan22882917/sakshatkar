@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, DollarSign, Info, LogIn, HelpCircle, Code, BookOpen, UserCheck, Settings } from 'lucide-react';
+import { Home, Users, DollarSign, Info, LogIn, HelpCircle, Code, BookOpen, UserCheck, Settings, Trophy } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -33,6 +33,11 @@ const navigationItems = [
     title: 'Interview Rounds', 
     icon: UserCheck, 
     url: '/interview-rounds' 
+  },
+  { 
+    title: 'Hackathons', 
+    icon: Trophy, 
+    url: '/hackathons' 
   },
   { 
     title: 'Community', 

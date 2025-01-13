@@ -235,33 +235,45 @@ export type Database = {
       }
       hackathons: {
         Row: {
+          banner_image_url: string | null
           created_at: string
           created_by: string | null
           description: string
           end_date: string
           id: string
+          offerings: string[] | null
+          organization_image_url: string | null
+          prize_money: number | null
           rules: string | null
           start_date: string
           status: string
           title: string
         }
         Insert: {
+          banner_image_url?: string | null
           created_at?: string
           created_by?: string | null
           description: string
           end_date: string
           id?: string
+          offerings?: string[] | null
+          organization_image_url?: string | null
+          prize_money?: number | null
           rules?: string | null
           start_date: string
           status?: string
           title: string
         }
         Update: {
+          banner_image_url?: string | null
           created_at?: string
           created_by?: string | null
           description?: string
           end_date?: string
           id?: string
+          offerings?: string[] | null
+          organization_image_url?: string | null
+          prize_money?: number | null
           rules?: string | null
           start_date?: string
           status?: string

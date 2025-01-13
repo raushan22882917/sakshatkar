@@ -26,6 +26,10 @@ export function CreateHackathonForm() {
   const [endDate, setEndDate] = useState<Date>();
   const [instructions, setInstructions] = useState("");
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [bannerImage, setBannerImage] = useState<File | null>(null);
+  const [orgImage, setOrgImage] = useState<File | null>(null);
+  const [prizeMoney, setPrizeMoney] = useState("");
+  const [offerings, setOfferings] = useState<string[]>([""]);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -47,6 +51,27 @@ export function CreateHackathonForm() {
     e.preventDefault();
     
     try {
+      let bannerImageUrl = null;
+      let orgImageUrl = null;
+
+      if (bannerImage) {
+        const { data: bannerData, error: bannerError } = await supabase.storage
+          .from("hackathon-images")
+          .upload(`banner/${Date.now()}-${bannerImage.name}`, bannerImage);
+
+        if (bannerError) throw bannerError;
+        bannerImageUrl = bannerData.path;
+      }
+
+      if (orgImage) {
+        const { data: orgData, error: orgError } = await supabase.storage
+          .from("hackathon-images")
+          .upload(`org/${Date.now()}-${orgImage.name}`, orgImage);
+
+        if (orgError) throw orgError;
+        orgImageUrl = orgData.path;
+      }
+
       const { data: hackathon, error: hackathonError } = await supabase
         .from("hackathons")
         .insert([
@@ -57,6 +82,10 @@ export function CreateHackathonForm() {
             end_date: endDate?.toISOString(),
             rules: instructions,
             status: "upcoming",
+            banner_image_url: bannerImageUrl,
+            organization_image_url: orgImageUrl,
+            prize_money: Number(prizeMoney),
+            offerings,
           },
         ])
         .select()
@@ -143,6 +172,28 @@ export function CreateHackathonForm() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
+              <label className="text-sm font-medium">Banner Image</label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setBannerImage(e.target.files?.[0] || null)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Organization Logo</label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setOrgImage(e.target.files?.[0] || null)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
               <label className="text-sm font-medium">Start Date</label>
               <Popover>
                 <PopoverTrigger asChild>
@@ -191,6 +242,40 @@ export function CreateHackathonForm() {
                 </PopoverContent>
               </Popover>
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Prize Money</label>
+            <Input
+              type="number"
+              value={prizeMoney}
+              onChange={(e) => setPrizeMoney(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-medium">What You Offer</h3>
+              <Button
+                type="button"
+                onClick={() => setOfferings([...offerings, ""])}
+              >
+                Add Offering
+              </Button>
+            </div>
+            {offerings.map((offering, index) => (
+              <Input
+                key={index}
+                value={offering}
+                onChange={(e) => {
+                  const newOfferings = [...offerings];
+                  newOfferings[index] = e.target.value;
+                  setOfferings(newOfferings);
+                }}
+                placeholder={`Offering ${index + 1}`}
+              />
+            ))}
           </div>
 
           <div className="space-y-4">
