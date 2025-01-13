@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
-import { AdminRoute } from "@/components/AdminRoute";
 
 interface Hackathon {
   id: string;
@@ -102,35 +101,33 @@ export default function AdminHackathon() {
   );
 
   return (
-    <AdminRoute>
-      <div className="container py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Hackathon Management</h1>
-          <Button onClick={() => navigate("/admin/hackathons/create")}>
-            Create New Hackathon
-          </Button>
-        </div>
-
-        <Tabs defaultValue="upcoming" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-            <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
-            <TabsTrigger value="past">Past</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="upcoming">
-            <HackathonList status="upcoming" />
-          </TabsContent>
-
-          <TabsContent value="ongoing">
-            <HackathonList status="ongoing" />
-          </TabsContent>
-
-          <TabsContent value="past">
-            <HackathonList status="past" />
-          </TabsContent>
-        </Tabs>
+    <div className="container py-8">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Hackathon Management</h1>
+        <Button onClick={() => navigate("/admin/hackathons/create")}>
+          Create New Hackathon
+        </Button>
       </div>
-    </AdminRoute>
+
+      <Tabs defaultValue="upcoming" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
+          <TabsTrigger value="past">Past</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="upcoming">
+          <HackathonList status="upcoming" />
+        </TabsContent>
+
+        <TabsContent value="ongoing">
+          <HackathonList status="ongoing" />
+        </TabsContent>
+
+        <TabsContent value="past">
+          <HackathonList status="past" />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

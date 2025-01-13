@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { Calendar, Clock, Trophy } from "lucide-react";
 
 interface Hackathon {
   id: string;
@@ -15,186 +11,132 @@ interface Hackathon {
   description: string;
   start_date: string;
   end_date: string;
+  status: "upcoming" | "ongoing" | "past";
   banner_image_url?: string;
   organization_image_url?: string;
   prize_money?: number;
   offerings?: string[];
-  status: "upcoming" | "ongoing" | "past";
 }
 
 export default function Hackathons() {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const { toast } = useToast();
   const [hackathons, setHackathons] = useState<Hackathon[]>([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchHackathons();
   }, []);
 
   const fetchHackathons = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("hackathons")
-        .select("*")
-        .order("start_date", { ascending: true });
+    const { data, error } = await supabase
+      .from("hackathons")
+      .select("*")
+      .order("start_date", { ascending: true });
 
-      if (error) throw error;
-
-      if (data) {
-        const categorizedHackathons = data.map((hackathon) => {
-          const startDate = new Date(hackathon.start_date);
-          const endDate = new Date(hackathon.end_date);
-          const now = new Date();
-
-          let status: "upcoming" | "ongoing" | "past";
-          if (now < startDate) {
-            status = "upcoming";
-          } else if (now > endDate) {
-            status = "past";
-          } else {
-            status = "ongoing";
-          }
-
-          return { ...hackathon, status };
-        });
-
-        setHackathons(categorizedHackathons);
-      }
-    } catch (error: any) {
+    if (error) {
       console.error("Error fetching hackathons:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load hackathons",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const registerForHackathon = async (hackathonId: string) => {
-    if (!user) {
-      toast({
-        title: "Authentication Required",
-        description: "Please log in to register for hackathons",
-        variant: "destructive",
-      });
-      navigate("/login");
       return;
     }
 
-    try {
-      const { error } = await supabase
-        .from("hackathon_participants")
-        .insert([{ hackathon_id: hackathonId, user_id: user.id }]);
+    if (data) {
+      const categorizedHackathons = data.map((hackathon) => {
+        const startDate = new Date(hackathon.start_date);
+        const endDate = new Date(hackathon.end_date);
+        const now = new Date();
 
-      if (error) throw error;
+        let status: "upcoming" | "ongoing" | "past";
+        if (now < startDate) {
+          status = "upcoming";
+        } else if (now > endDate) {
+          status = "past";
+        } else {
+          status = "ongoing";
+        }
 
-      toast({
-        title: "Success",
-        description: "You have successfully registered for the hackathon",
+        return { ...hackathon, status };
       });
-    } catch (error: any) {
-      console.error("Error registering for hackathon:", error);
-      toast({
-        title: "Error",
-        description: "Failed to register for the hackathon",
-        variant: "destructive",
-      });
+
+      setHackathons(categorizedHackathons);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const HackathonList = ({ status }: { status: "upcoming" | "ongoing" | "past" }) => (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {hackathons
+        .filter((h) => h.status === status)
+        .map((hackathon) => (
+          <Card key={hackathon.id} className="hover:shadow-lg transition-shadow">
+            {hackathon.banner_image_url && (
+              <div className="relative w-full h-32">
+                <img
+                  src={hackathon.banner_image_url}
+                  alt={hackathon.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+            <CardHeader>
+              <div className="flex items-center gap-4">
+                {hackathon.organization_image_url && (
+                  <img
+                    src={hackathon.organization_image_url}
+                    alt="Organization"
+                    className="w-10 h-10 rounded-full"
+                  />
+                )}
+                <CardTitle>{hackathon.title}</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                {hackathon.description}
+              </p>
+              <div className="space-y-2">
+                <p className="text-sm">
+                  Start: {new Date(hackathon.start_date).toLocaleString()}
+                </p>
+                <p className="text-sm">
+                  End: {new Date(hackathon.end_date).toLocaleString()}
+                </p>
+                {hackathon.prize_money && (
+                  <p className="text-sm font-semibold">
+                    Prize Pool: ${hackathon.prize_money}
+                  </p>
+                )}
+              </div>
+              <Button
+                className="mt-4 w-full"
+                onClick={() => navigate(`/hackathons/${hackathon.id}`)}
+              >
+                View Details
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+    </div>
+  );
 
   return (
     <div className="container py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Hackathons</h1>
-      </div>
+      <h1 className="text-3xl font-bold mb-8">Hackathons</h1>
 
-      <Tabs defaultValue="ongoing" className="space-y-4">
+      <Tabs defaultValue="upcoming" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
           <TabsTrigger value="past">Past</TabsTrigger>
         </TabsList>
 
-        {["ongoing", "upcoming", "past"].map((status) => (
-          <TabsContent key={status} value={status}>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {hackathons
-                .filter((h) => h.status === status)
-                .map((hackathon) => (
-                  <Card key={hackathon.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      {hackathon.banner_image_url && (
-                        <img
-                          src={hackathon.banner_image_url}
-                          alt={hackathon.title}
-                          className="w-full h-32 object-cover rounded-t-lg mb-4"
-                        />
-                      )}
-                      <div className="flex items-center justify-between">
-                        <CardTitle>{hackathon.title}</CardTitle>
-                        <Badge
-                          className={
-                            status === "ongoing"
-                              ? "bg-green-500"
-                              : status === "upcoming"
-                              ? "bg-blue-500"
-                              : "bg-gray-500"
-                          }
-                        >
-                          {status.charAt(0).toUpperCase() + status.slice(1)}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        {hackathon.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-4 text-sm">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>
-                            {new Date(hackathon.start_date).toLocaleDateString()} - 
-                            {new Date(hackathon.end_date).toLocaleDateString()}
-                          </span>
-                        </div>
-                        {hackathon.prize_money && (
-                          <div className="flex items-center gap-2">
-                            <Trophy className="w-4 h-4" />
-                            <span>${hackathon.prize_money}</span>
-                          </div>
-                        )}
-                      </div>
+        <TabsContent value="upcoming">
+          <HackathonList status="upcoming" />
+        </TabsContent>
 
-                      <div className="mt-4 flex justify-between items-center">
-                        <Button
-                          variant="outline"
-                          onClick={() => navigate(`/hackathons/${hackathon.id}`)}
-                        >
-                          View Details
-                        </Button>
-                        {status === "upcoming" && (
-                          <Button
-                            onClick={() => registerForHackathon(hackathon.id)}
-                          >
-                            Register Now
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-            </div>
-          </TabsContent>
-        ))}
+        <TabsContent value="ongoing">
+          <HackathonList status="ongoing" />
+        </TabsContent>
+
+        <TabsContent value="past">
+          <HackathonList status="past" />
+        </TabsContent>
       </Tabs>
     </div>
   );
