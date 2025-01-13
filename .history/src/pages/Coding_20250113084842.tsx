@@ -24,14 +24,6 @@ export default function Coding() {
       route: "/team-coding",
       image: "https://savvytokyo.scdn3.secure.raxcdn.com/app/uploads/2023/10/LINE_ALBUM_1-Monday_231016_4.jpg",
     },
-    {
-      title: "Company Wise Questions",
-      description: "Browse and practice coding questions by your company's previous year questions.",
-      icon: Building,
-      route: "/company-questions",
-      image: "https://savvytokyo.scdn3.secure.raxcdn.com/app/uploads/2023/10/LINE_ALBUM_1-Monday_231016_4.jpg",
-    },
-    
   ];
 
   return (
